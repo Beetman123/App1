@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="CREATE_USER_SQL">
+    CREATE TABLE IF NOT EXISTS User
+    (id TEXT PRIMARY KEY, shortDesc TEXT,
+    longDesc TEXT, prereqs TEXT)
+</string>
+
+    <string name="DROP_USER_SQL">
+    DROP TABLE IF EXISTS Course
+</string>
+
+
+</resources>
