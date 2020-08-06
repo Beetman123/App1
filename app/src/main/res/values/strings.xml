@@ -4,4 +4,19 @@
     <string name="LOGIN_PREFS">edu.tacoma.uw.datalab.PREFS</string>
    <string name="LOGGEDIN">loggedin</string>
     <string name="action_logout">Sign Out</string>
+
+    <!-- Login Fragment strings -->
+    <string name="login_fragment">Login fragment</string>
+    <string name="nav_register_fragment">Click here to Register</string>
+    <string name="login_text">Login</string>
+    <string name="login_email_hint">Enter your email</string>
+    <string name="login_remember_me">Remember me?</string>
+
+    <!-- Register Fragment strings -->
+    <string name="register_fragment">Register fragment</string>
+
+
+    <!-- menu strings -->
+    <string name="about">About</string>
+    <string name="help">Help</string>
 </resources>
