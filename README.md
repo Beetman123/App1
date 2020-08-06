@@ -1,4 +1,9 @@
 # Mobile_App_Project
 Group Project
+Group 14
 
-This is the file that we should update each time we finish something so that we can keep track of what got done in what update
+Jacob Sousie, Jaedan Parsons
+
+Attempted Login and Sign-up
+Finished Bottom Button Bar user story
+
