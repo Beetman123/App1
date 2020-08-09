@@ -1,4 +1,4 @@
-package com.example.mobileappgit.authenticate;
+package com.example.mobileappgit.PostItem;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,41 +7,46 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.mobileappgit.R;
+
 /**
  * A simple {@link Fragment} subclass.
 
-    The login fragment has a listener which waits until the SIGN IN button has been pressed
-    -   If the email address doesn't have a '@' symbol in it a toast message is sent to the
-        screen when the 'SIGN IN' button is pressed
-    -   If the password has less then 6 characters in it a toast message is sent to the
-        screen when the 'SIGN IN' button is pressed
+ The ItemList fragment has a listener which waits until the POST ITEM button has been pressed
+
+ NOT COMPLETE Class still needs to be changed
+ 
+ Not true
+ -   If the email address doesn't have a '@' symbol in it a toast message is sent to the
+ screen when the 'SIGN IN' button is pressed
+ -   If the password has less then 6 characters in it a toast message is sent to the
+ screen when the 'SIGN IN' button is pressed
  */
-public class LoginFragment extends Fragment {
+
+public class ItemListFragment extends Fragment {
 
     /**
-     * The login fragment's listener
+     * The Item List fragment's listener
      */
-    private LoginFragmentListener mLoginFragmentListener;
+    private ItemListFragmentListener mItemListFragmentListener;
 
     /**
      * Required empty public constructor
      */
-    public LoginFragment() {
+    public ItemListFragment() {
         // Required empty public constructor
     }
-
     /**
-     * Calls the login function
+     * Calls the ItemList function
      */
-    public interface LoginFragmentListener {
-        public void login(String email, String pwd);
+    public interface ItemListFragmentListener {
+        public void ItemList(String email, String pwd);
     }
-
 
     /**
      * Creates the page
@@ -51,23 +56,31 @@ public class LoginFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-
     /**
      The system calls this method to draw the Fragment UI for the first time
+
+
+     View Visibility in Android could be used to hide or show the text using the switches to activate it
+
      */
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
-        getActivity().setTitle("Sign In");
-        mLoginFragmentListener = (LoginFragmentListener) getActivity();
-        final EditText emailText = view.findViewById(R.id.email_address_id);
-        final EditText pwdText = view.findViewById(R.id.password_id);
+        View view = inflater.inflate(R.layout.fragment_postitem, container, false);
+        getActivity().setTitle("Add Item");
+        mItemListFragmentListener = (ItemListFragmentListener) getActivity();
 
-        Button loginButton = view.findViewById(R.id.login_button);
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        final EditText emailText = view.findViewById(R.id.email_address_id);// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        final EditText pwdText = view.findViewById(R.id.password_id);// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+        //final Switch
+
+        Button ItemListButton = view.findViewById(R.id.add_item_button);// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        ItemListButton.setOnClickListener(new View.OnClickListener() {
 
             /**
+             * NEEDS TO BE CHANGED
+             *
              -   If the email address doesn't have a '@' symbol in it a toast message is sent to the
              screen when the 'SIGN IN' button is pressed
              -   If the password has less then 6 characters in it a toast message is sent to the
@@ -92,8 +105,8 @@ public class LoginFragment extends Fragment {
 
                 }
                 else{
-                mLoginFragmentListener.login(emailText.getText().toString(), pwdText.getText().toString());
-            }}
+                    mItemListFragmentListener.ItemList(emailText.getText().toString(), pwdText.getText().toString());
+                }}
         });
 
         return  view;

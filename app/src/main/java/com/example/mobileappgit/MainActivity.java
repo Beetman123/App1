@@ -11,7 +11,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.mobileappgit.PostItem.PostItemFragment;
+import com.example.mobileappgit.Profile.ProfileFragment;
 import com.example.mobileappgit.authenticate.SignInActivity;
+import com.example.mobileappgit.main.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -60,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new SearchFragment();
                             break;
                         case R.id.nav_plus:
-                            selectedFragment = new NewTradeFragment();
+                            selectedFragment = new PostItemFragment();
                             break;
                         case R.id.nav_communicate:
                             selectedFragment = new CommunicateFragment();

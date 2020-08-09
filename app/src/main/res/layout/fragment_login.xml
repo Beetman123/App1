@@ -17,6 +17,7 @@
             android:hint="Enter your email"
             android:inputType="textEmailAddress" />
 
+
         <EditText
             android:id="@+id/password_id"
             android:layout_width="match_parent"
@@ -30,5 +31,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="SIGN IN" />
+
+        <CheckBox
+            android:id="@+id/login_check_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Remember me?" />
+
+        <TextView
+            android:id="@+id/register_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Click here to register" />
     </LinearLayout>
 </FrameLayout>

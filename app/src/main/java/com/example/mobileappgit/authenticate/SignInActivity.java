@@ -8,16 +8,22 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.mobileappgit.HomeFragment;
 import com.example.mobileappgit.MainActivity;
 import com.example.mobileappgit.R;
-import com.example.mobileappgit.main.MainMenuActivity;
 
+/**
+ * The Sign In Activity uses the Login Fragment Listener to check if the person would like
+ * to stay logged in or to be logged out when they close the app
+ */
 public class SignInActivity extends AppCompatActivity implements LoginFragment.LoginFragmentListener {
 
 
     private SharedPreferences mSharedPreferences;
 
+    /**
+     *
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
