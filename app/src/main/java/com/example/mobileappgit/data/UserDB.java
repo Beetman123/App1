@@ -27,6 +27,7 @@ public class UserDB {
         mSQLiteDatabase = mUserDBHelper.getWritableDatabase();
 
     }
+
     //CLASS IS NOT COMPLETE
 
     /**
@@ -73,9 +74,12 @@ public class UserDB {
         c.moveToFirst();
         List<User> list = new ArrayList<User>();
         for (int i=0; i<c.getCount(); i++) {
-            String username = c.getString(0);
-            String password = c.getString(1);
-            User user = new User(username, password);
+            String firstname = c.getString(0);
+            String lastname = c.getString(1);
+            String username = c.getString(2);
+            String email = c.getString(3);
+            String password = c.getString(3);
+            User user = new User(firstname, lastname, username, email, password);
             list.add(user);
             c.moveToNext();
         }

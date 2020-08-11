@@ -17,6 +17,10 @@ import com.example.mobileappgit.R;
  *
  *
  * Actually ItemListFragment.java may be what PostItemFragment is supposed to be
+ *
+ *
+ * should add a 'switch'Listener and if it is set to false we set the visibility of trades to gone
+ * if set to true we show them.
  */
 public class PostItemFragment extends Fragment {
     @Nullable

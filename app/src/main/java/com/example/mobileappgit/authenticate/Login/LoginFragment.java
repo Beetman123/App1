@@ -1,4 +1,4 @@
-package com.example.mobileappgit.authenticate;
+package com.example.mobileappgit.authenticate.Login;
 
 import android.os.Bundle;
 import android.text.TextUtils;

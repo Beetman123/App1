@@ -24,7 +24,7 @@
             tools:text="Firstname" />
 
         <EditText
-            android:id="@+id/editTextLastname"
+            android:id="@+id/editTextLastName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -74,13 +74,20 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="111dp" />
 
-
     <Button
-        android:id="@+id/button"
+        android:id="@+id/register_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Register"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="348dp" />
+
+        <Button
+            android:id="@+id/login_return_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Return to Login"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="348dp" />
 </LinearLayout>
 </FrameLayout>
