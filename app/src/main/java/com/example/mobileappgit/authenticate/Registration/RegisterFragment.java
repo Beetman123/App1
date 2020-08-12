@@ -76,7 +76,7 @@ public class RegisterFragment extends Fragment {
 
 
 
-        // What happens when "Return to Login" button is pressed
+        /*// What happens when "Return to Login" button is pressed
         Button returnToLoginButton = v.findViewById(R.id.login_return_id);
 
             //Button returnToLoginButton = v.findViewById(R.id.login_return_id);
@@ -93,7 +93,7 @@ public class RegisterFragment extends Fragment {
                         mAddListener.addUser(user);
                     }
                 }
-            }
+            }*/
 
 
         );
