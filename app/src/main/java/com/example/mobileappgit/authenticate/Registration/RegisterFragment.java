@@ -28,6 +28,10 @@ public class RegisterFragment extends Fragment {
         public  void addUser (User user);
     }
 
+    public interface RegisterFragmentListener {
+        void register(String email, String pwd);
+    }
+
     public RegisterFragment(){
         //Required empty public constructor
     }

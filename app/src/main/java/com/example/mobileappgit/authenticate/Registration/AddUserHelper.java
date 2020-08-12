@@ -8,7 +8,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobileappgit.R;
-import com.example.mobileappgit.authenticate.Registration.RegisterFragment;
 import com.example.mobileappgit.authenticate.User;
 
 import org.json.JSONException;
@@ -21,7 +20,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class SignInActivity extends AppCompatActivity
+public class AddUserHelper extends AppCompatActivity
         implements RegisterFragment.AddListener {
 
     public static final String ADD_USER = "add_user"; // should 'add_user' be all caps?
@@ -30,11 +29,11 @@ public class SignInActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in); //
+        setContentView(R.layout.activity_user_helper); //
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.sign_in_fragment_container, new RegisterFragment())
+                .add(R.id.user_helper_fragment_container, new RegisterFragment())
                 .commit();
     }
 

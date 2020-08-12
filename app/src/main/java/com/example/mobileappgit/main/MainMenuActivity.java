@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobileappgit.R;
-import com.example.mobileappgit.authenticate.Registration.SignInActivity;
+import com.example.mobileappgit.authenticate.Registration.AddUserHelper;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -34,7 +34,7 @@ public class MainMenuActivity extends AppCompatActivity {
             sharedPreferences.edit().putBoolean(getString(R.string.LOGGEDIN), false)
                     .commit();
 
-            Intent i = new Intent(this, SignInActivity.class);
+            Intent i = new Intent(this, AddUserHelper.class);
             startActivity(i);
             finish();
         }
