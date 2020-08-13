@@ -47,6 +47,8 @@ public class LoginFragment extends Fragment {
                 ((LoginFragmentListener) getActivity()).launchRegisterFragment();
             }
         });
+
+
         final EditText emailEditText = view.findViewById(R.id.email_address_id);
         final CheckBox rememberCheckBox = view.findViewById(R.id.login_check_box);
         Button loginButton = view.findViewById(R.id.login_button);
@@ -68,6 +70,4 @@ public class LoginFragment extends Fragment {
         });
         return view;
     }
-
-
 }

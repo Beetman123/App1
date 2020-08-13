@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +34,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.mobileappgit.R;
+import com.example.mobileappgit.authenticate.Registration.AddUserHelper;
 import com.example.mobileappgit.authenticate.Registration.RegisterFragment;
+import com.example.mobileappgit.authenticate.User;
 import com.example.mobileappgit.main.MainActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,18 +60,25 @@ import com.example.mobileappgit.main.MainActivity;
  */
 public class SignInActivity extends AppCompatActivity
         implements LoginFragment.LoginFragmentListener,
-        RegisterFragment.RegisterFragmentListener {
+        RegisterFragment.AddListener {
+
+    public static final String ADD_USER = "add_user"; // should 'add_user' be all caps?
+    private JSONObject mUserJSON;
 
     private boolean mLoginMode;
     private String mEmail;
     private boolean mRemember;
+
+    private JSONObject mLoginJSON;
+    //private JSONObject mUserJSON;
+
     public final static String SIGN_IN_FILE_PREFS = "edu.uw.tacoma.menakaapp.sign_in_file_prefs"; // Needs to change
     public final static String EMAIL = "email";
     public final static String REMEMBER = "remember";
     private SharedPreferences mSharedPreferences;
 
 
-/*    *//**
+    /*    *//**
      * The login fragment's listener
      *//*
     private SignInActivityListener mSignInActivityListener;
@@ -72,7 +92,7 @@ public class SignInActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
 
-        mSharedPreferences = getSharedPreferences(SIGN_IN_FILE_PREFS, Context.MODE_PRIVATE);
+        //mSharedPreferences = getSharedPreferences(SIGN_IN_FILE_PREFS, Context.MODE_PRIVATE);
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.sign_in_fragment_container, new LoginFragment())
@@ -86,7 +106,6 @@ public class SignInActivity extends AppCompatActivity
 /*    public SignInActivity() {
         // Required empty public constructor
     }*/
-
     @Override
     public void launchRegisterFragment() {
         getSupportFragmentManager()
@@ -97,81 +116,198 @@ public class SignInActivity extends AppCompatActivity
     }
 
     @Override
-    public void login(String email, String pwd, boolean shouldRemember) {
+    public void login(String email, String pwd, boolean shouldRemember) { // email could later become either email or username
         mLoginMode = true;
-        mEmail = email;
+        mEmail = email; // is there a reason for this? if so what about pwd
         mRemember = shouldRemember;
 
+        StringBuilder loginUrl = new StringBuilder(getString(R.string.get_user)); // gets (url) string from urls.xml
 
 
         // TODO - Create the json object for passing with the login url
-
-
-
-
         // Execute Async Task with login url
+
+        mLoginJSON = new JSONObject();
+
+        try {
+            // needs to be the same order as the table
+            mLoginJSON.put(User.FIRSTNAME, "");   // Don't have/need this info
+            mLoginJSON.put(User.LASTNAME, "");    // Don't have/need this info
+            mLoginJSON.put(User.USERNAME, "");    // may have to check latter but currently don't need
+            mLoginJSON.put(User.EMAIL, mEmail/*email*/);          // put in email information
+            mLoginJSON.put(User.PASSWORD, pwd);         // check password information
+            //mLoginJSON.put(User.loginMode, mLoginMode); // dont have somewhere to store yet
+
+            new AuthenticateAsyncTask().execute(loginUrl.toString());
+        } catch (JSONException e) {
+            Toast.makeText(this, "Error with JSON creation on adding a user: "
+                            + e.getMessage(),
+                    Toast.LENGTH_SHORT).show();
+        }
+
+
+        // is this done?
         new AuthenticateAsyncTask().execute("");
         // TODO - The following code should happen in the onPostExecute
         // once the login is authenticated
     }
 
     @Override
-    public void register(String email, String pwd) {
+    public void addUser(User user) {
+        StringBuilder url = new StringBuilder(getString(R.string.add_user)); // url supposed to be url?
 
-/*        getSupportFragmentManager().beginTransaction()
-                .add(R.id.sign_in_fragment_container, new LoginFragment())
-                .commit();*/
+        // Construct a JSONObject to build a formatted message to send.
+        mUserJSON = new JSONObject();
+        try {
+            // Must be in this order (because its the order of the table)
+            mUserJSON.put(User.FIRSTNAME, user.getFirstname());
+            mUserJSON.put(User.LASTNAME, user.getLastname());
+            mUserJSON.put(User.USERNAME, user.getmUsername());
+            mUserJSON.put(User.EMAIL, user.getEmail());
+            mUserJSON.put(User.PASSWORD, user.getmPassword());
 
-
-        // TODO - Create the json object for passing with the register url
-        // Execute Async Task with register url
-        // TODO - The following code should happen in the onPostExecute
-        // once the login is authenticated
-        new AuthenticateAsyncTask().execute("");
+            new AddCourseAsyncTask().execute(url.toString());
+        } catch (JSONException e) { // is there a reason its 'e'
+            Toast.makeText(this, "Error with JSON creation on adding a course: "
+                            + e.getMessage(),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
 
-    private class AuthenticateAsyncTask extends AsyncTask<String, Void, String> {
-
+    private class AddCourseAsyncTask extends AsyncTask<String, Void, String> {
         @Override
-        protected String doInBackground(String... strings) {
-            return "";
+        protected String doInBackground(String... urls) {
+            String response = "";
+            HttpURLConnection urlConnection = null;
+            for (String url : urls) {
+                try {
+                    URL urlObject = new URL(url);
+                    urlConnection = (HttpURLConnection) urlObject.openConnection();
+                    urlConnection.setRequestMethod("POST");
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
+                    urlConnection.setDoOutput(true);
+                    OutputStreamWriter wr =
+                            new OutputStreamWriter(urlConnection.getOutputStream());
+
+                    // For Debugging
+                    Log.i(ADD_USER, mUserJSON.toString());
+                    wr.write(mUserJSON.toString());
+                    wr.flush();
+                    wr.close();
+
+                    InputStream content = urlConnection.getInputStream();
+
+                    BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                    String s = "";
+                    while ((s = buffer.readLine()) != null) {
+                        response += s;
+                    }
+
+                } catch (Exception e) {
+                    response = "Unable to add the new course, Reason: "
+                            + e.getMessage();
+                } finally {
+                    if (urlConnection != null)
+                        urlConnection.disconnect();
+                }
+            }
+            return response;
         }
 
         @Override
         protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            // TODO - Check for success
-            if (mLoginMode) {
-                // If login mode, show login message
-                // If failed, show the messages
-                // If successful, here's where the shared preferences
-                // must be update to remember the user
-                // Navigate to the next activity
-                if (mRemember) {
-                    mSharedPreferences.edit()
-                            .putString(EMAIL, mEmail)
-                            .putBoolean(REMEMBER, mRemember)
-                            .commit();
+            if (s.startsWith("Unable to add the new course")) {
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.getBoolean("success")) {
+                    Toast.makeText(getApplicationContext(), "User Added successfully"
+                            , Toast.LENGTH_SHORT).show();
                 } else {
-                    mSharedPreferences.edit()
-                            .clear()
-                            .commit();
+                    Toast.makeText(getApplicationContext(), "User couldn't be added: " // error even though all fields are filled in error still pops up
+                                    + jsonObject.getString("error")
+                            , Toast.LENGTH_LONG).show();
+                    Log.e(ADD_USER, jsonObject.getString("error"));
                 }
-                Intent intent = new Intent(getApplicationContext()
-                        , MainActivity.class);                   //TODO - Check where this takes me, THIS COULD BE WRONG !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                startActivity(intent);
-                finish();
-            } else {
-                // else register messages
-                // Next navigation to launch Loginfragment
-                getSupportFragmentManager().popBackStackImmediate();
+            } catch (JSONException e) {
+                Toast.makeText(getApplicationContext(), "JSON Parsing error on Adding user"
+                                + e.getMessage()
+                        , Toast.LENGTH_LONG).show();
+                Log.e(ADD_USER, e.getMessage());
             }
         }
     }
 
 
+    private class AuthenticateAsyncTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            String response = "";
+            HttpURLConnection urlConnection = null;
+            for (String url : urls) {
+                try {
+                    URL urlObject = new URL(url);
+                    urlConnection = (HttpURLConnection) urlObject.openConnection();
+                    urlConnection.setRequestMethod("POST");
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
+                    urlConnection.setDoOutput(true);
+                    OutputStreamWriter wr =
+                            new OutputStreamWriter(urlConnection.getOutputStream());
+
+                    // For Debugging
+                    Log.i(ADD_USER, mUserJSON.toString());
+                    wr.write(mUserJSON.toString());
+                    wr.flush();
+                    wr.close();
+
+                    InputStream content = urlConnection.getInputStream();
+
+                    BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                    String s = "";
+                    while ((s = buffer.readLine()) != null) {
+                        response += s;
+                    }
+
+                } catch (Exception e) {
+                    response = "Unable to add the new course, Reason: "
+                            + e.getMessage();
+                } finally {
+                    if (urlConnection != null)
+                        urlConnection.disconnect();
+                }
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (s.startsWith("Unable to add the new course")) {
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.getBoolean("success")) {
+                    Toast.makeText(getApplicationContext(), "User Added successfully"
+                            , Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "User couldn't be added: " // error even though all fields are filled in error still pops up
+                                    + jsonObject.getString("error")
+                            , Toast.LENGTH_LONG).show();
+                    Log.e(ADD_USER, jsonObject.getString("error"));
+                }
+            } catch (JSONException e) {
+                Toast.makeText(getApplicationContext(), "JSON Parsing error on Adding user"
+                                + e.getMessage()
+                        , Toast.LENGTH_LONG).show();
+                Log.e(ADD_USER, e.getMessage());
+            }
+        }
+    }
+}
 
 /*    *//**
      * Calls the login function
@@ -229,6 +365,6 @@ public class SignInActivity extends AppCompatActivity
         });
 
         return  view;
-    }*/
+    }
 
-}
+}*/

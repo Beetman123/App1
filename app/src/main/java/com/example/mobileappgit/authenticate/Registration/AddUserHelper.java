@@ -33,7 +33,7 @@ public class AddUserHelper extends AppCompatActivity
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.user_helper_fragment_container, new RegisterFragment())
+                .add(R.id.sign_in_fragment_container, new RegisterFragment())
                 .commit();
     }
 
