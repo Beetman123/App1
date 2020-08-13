@@ -1,4 +1,4 @@
-package com.example.mobileappgit.authenticate.Registration;
+package com.example.mobileappgit.authenticate.Login;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobileappgit.R;
+import com.example.mobileappgit.authenticate.Registration.RegisterFragment;
 import com.example.mobileappgit.authenticate.User;
 
 import org.json.JSONException;
@@ -20,7 +21,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class AddUserHelper extends AppCompatActivity
+public class oldSignInActivity extends AppCompatActivity
         implements RegisterFragment.AddListener {
 
     public static final String ADD_USER = "add_user"; // should 'add_user' be all caps?

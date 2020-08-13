@@ -16,28 +16,18 @@ public class SignInActivity extends AppCompatActivity {
     }
 }*/
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.mobileappgit.R;
-import com.example.mobileappgit.authenticate.Registration.AddUserHelper;
 import com.example.mobileappgit.authenticate.Registration.RegisterFragment;
 import com.example.mobileappgit.authenticate.User;
-import com.example.mobileappgit.main.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -72,7 +62,7 @@ public class SignInActivity extends AppCompatActivity
     private JSONObject mLoginJSON;
     //private JSONObject mUserJSON;
 
-    public final static String SIGN_IN_FILE_PREFS = "edu.uw.tacoma.menakaapp.sign_in_file_prefs"; // Needs to change
+    public final static String SIGN_IN_FILE_PREFS = "edu.uw.tacoma.menakaapp.sign_in_file_prefs"; // TODO - Needs to change
     public final static String EMAIL = "email";
     public final static String REMEMBER = "remember";
     private SharedPreferences mSharedPreferences;
@@ -115,6 +105,7 @@ public class SignInActivity extends AppCompatActivity
                 .commit();
     }
 
+    // Method / Function that is called when the "Sign In" button is pressed
     @Override
     public void login(String email, String pwd, boolean shouldRemember) { // email could later become either email or username
         mLoginMode = true;
@@ -242,18 +233,21 @@ public class SignInActivity extends AppCompatActivity
     }
 
 
+
+    // TODO - Need to edit !!!
+
     private class AuthenticateAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
-            String response = "";
+            String response = ""; // TODO
             HttpURLConnection urlConnection = null;
             for (String url : urls) {
                 try {
                     URL urlObject = new URL(url);
                     urlConnection = (HttpURLConnection) urlObject.openConnection();
-                    urlConnection.setRequestMethod("POST");
-                    urlConnection.setRequestProperty("Content-Type", "application/json");
-                    urlConnection.setDoOutput(true);
+                    urlConnection.setRequestMethod("GET"); // Switched to GET (from POST)
+                    urlConnection.setRequestProperty("Content-Type", "application/json"); // TODO - ??
+                    urlConnection.setDoOutput(false); // Changed to false
                     OutputStreamWriter wr =
                             new OutputStreamWriter(urlConnection.getOutputStream());
 
@@ -272,7 +266,7 @@ public class SignInActivity extends AppCompatActivity
                     }
 
                 } catch (Exception e) {
-                    response = "Unable to add the new course, Reason: "
+                    response = "Unable to add the new user, Reason: "
                             + e.getMessage();
                 } finally {
                     if (urlConnection != null)
@@ -284,7 +278,7 @@ public class SignInActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(String s) {
-            if (s.startsWith("Unable to add the new course")) {
+            if (s.startsWith("Unable to add the new user")) {
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -309,7 +303,8 @@ public class SignInActivity extends AppCompatActivity
     }
 }
 
-/*    *//**
+
+    /**
      * Calls the login function
      *//*
     public interface SignInActivityListener {

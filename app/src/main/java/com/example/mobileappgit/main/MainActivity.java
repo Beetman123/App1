@@ -16,7 +16,7 @@ import com.example.mobileappgit.PostItem.PostItemFragment;
 import com.example.mobileappgit.Profile.ProfileFragment;
 import com.example.mobileappgit.R;
 import com.example.mobileappgit.Search.SearchFragment;
-import com.example.mobileappgit.authenticate.Registration.AddUserHelper;
+import com.example.mobileappgit.authenticate.Login.oldSignInActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             sharedPreferences.edit().putBoolean(getString(R.string.LOGGEDIN), false)
                     .commit();
 
-            Intent i = new Intent(this, AddUserHelper.class);
+            Intent i = new Intent(this, oldSignInActivity.class); // TODO - incorrect use SignInActivity instead
             startActivity(i);
             finish();
         }

@@ -4,11 +4,13 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.mobileappgit.R;
 import com.example.mobileappgit.authenticate.User;
@@ -25,7 +27,7 @@ public class RegisterFragment extends Fragment {
     //private Button signInReturn;
 
     public interface AddListener {
-        public  void addUser (User user);
+        void addUser(User user);
     }
 
     public RegisterFragment(){
@@ -64,9 +66,29 @@ public class RegisterFragment extends Fragment {
                 String Email = userEmailEditText.getText().toString();
                 String Username = userUsernameEditText.getText().toString();
                 String Password = userPasswordEditText.getText().toString();
-                User user = new User(Firstname, Lastname, Email, Username, Password); // who's order does it need to follow?
-                if (mAddListener != null) {
-                    mAddListener.addUser(user);
+
+                // Does it look like a valid email
+                if(TextUtils.isEmpty(Email) || !Email.contains("@")) {
+                    Toast.makeText(v.getContext(),"Enter valid email address",
+                            Toast.LENGTH_SHORT)
+                            .show();
+                    userEmailEditText.requestFocus();
+                }
+
+                // does it meet password requirements?
+                else if (TextUtils.isEmpty(Password) || Password.length() < 6) {
+                    Toast.makeText(v.getContext(), "Enter a valid password( atleast 6 characters)"
+                            , Toast.LENGTH_SHORT)
+                            .show();
+                    userPasswordEditText.requestFocus();
+                }
+
+                // if all other conditions are met
+                else {
+                    User user = new User(Firstname, Lastname, Email, Username, Password); // who's order does it need to follow?
+                    if (mAddListener != null) {
+                        mAddListener.addUser(user);
+                    }
                 }
             }
         }
