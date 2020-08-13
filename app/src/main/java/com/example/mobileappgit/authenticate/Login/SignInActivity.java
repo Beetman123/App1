@@ -16,6 +16,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 }*/
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import androidx.fragment.app.Fragment;
 import com.example.mobileappgit.R;
 import com.example.mobileappgit.authenticate.Registration.RegisterFragment;
 import com.example.mobileappgit.authenticate.User;
+import com.example.mobileappgit.main.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,7 +54,8 @@ public class SignInActivity extends AppCompatActivity
         implements LoginFragment.LoginFragmentListener,
         RegisterFragment.AddListener {
 
-    public static final String ADD_USER = "add_user"; // should 'add_user' be all caps?
+    public static final String ADD_USER = "add_user"; // is referencing urls.xml
+    public static final String GET_USER = "get_user"; // is referencing urls.xml
     private JSONObject mUserJSON;
 
     private boolean mLoginMode;
@@ -122,9 +125,9 @@ public class SignInActivity extends AppCompatActivity
 
         try {
             // needs to be the same order as the table
-            mLoginJSON.put(User.FIRSTNAME, "");   // Don't have/need this info
-            mLoginJSON.put(User.LASTNAME, "");    // Don't have/need this info
-            mLoginJSON.put(User.USERNAME, "");    // may have to check latter but currently don't need
+            //mLoginJSON.put(User.FIRSTNAME, "");   // Don't have/need this info
+            //mLoginJSON.put(User.LASTNAME, "");    // Don't have/need this info
+            //mLoginJSON.put(User.USERNAME, "");    // may have to check latter but currently don't need
             mLoginJSON.put(User.EMAIL, mEmail/*email*/);          // put in email information
             mLoginJSON.put(User.PASSWORD, pwd);         // check password information
             //mLoginJSON.put(User.loginMode, mLoginMode); // dont have somewhere to store yet
@@ -135,12 +138,6 @@ public class SignInActivity extends AppCompatActivity
                             + e.getMessage(),
                     Toast.LENGTH_SHORT).show();
         }
-
-
-        // is this done?
-        new AuthenticateAsyncTask().execute("");
-        // TODO - The following code should happen in the onPostExecute
-        // once the login is authenticated
     }
 
     @Override
@@ -157,7 +154,7 @@ public class SignInActivity extends AppCompatActivity
             mUserJSON.put(User.EMAIL, user.getEmail());
             mUserJSON.put(User.PASSWORD, user.getmPassword());
 
-            new AddCourseAsyncTask().execute(url.toString());
+            new AddUserAsyncTask().execute(url.toString());
         } catch (JSONException e) { // is there a reason its 'e'
             Toast.makeText(this, "Error with JSON creation on adding a course: "
                             + e.getMessage(),
@@ -166,7 +163,8 @@ public class SignInActivity extends AppCompatActivity
     }
 
 
-    private class AddCourseAsyncTask extends AsyncTask<String, Void, String> {
+    // Stuff that connects to the back when Register? is clicked
+    private class AddUserAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
             String response = "";
@@ -243,17 +241,21 @@ public class SignInActivity extends AppCompatActivity
             HttpURLConnection urlConnection = null;
             for (String url : urls) {
                 try {
+
                     URL urlObject = new URL(url);
                     urlConnection = (HttpURLConnection) urlObject.openConnection();
-                    urlConnection.setRequestMethod("GET"); // Switched to GET (from POST)
+                    urlConnection.setRequestMethod("POST");//urlConnection.setRequestMethod("GET"); // Switched to GET (from POST)
                     urlConnection.setRequestProperty("Content-Type", "application/json"); // TODO - ??
-                    urlConnection.setDoOutput(false); // Changed to false
+                    urlConnection.setDoOutput(true);
+                    //urlConnection.setDoOutput(false); // Changed to false
                     OutputStreamWriter wr =
                             new OutputStreamWriter(urlConnection.getOutputStream());
 
+                    // error happens here !!!!!!!!!!!!!!
+
                     // For Debugging
-                    Log.i(ADD_USER, mUserJSON.toString());
-                    wr.write(mUserJSON.toString());
+                    Log.i(GET_USER, mLoginJSON.toString()); // should I have mUserJSON
+                    wr.write(mLoginJSON.toString());
                     wr.flush();
                     wr.close();
 
@@ -266,7 +268,7 @@ public class SignInActivity extends AppCompatActivity
                     }
 
                 } catch (Exception e) {
-                    response = "Unable to add the new user, Reason: "
+                    response = "Unable to authenticate login, Reason: " // fixed this string
                             + e.getMessage();
                 } finally {
                     if (urlConnection != null)
@@ -277,27 +279,31 @@ public class SignInActivity extends AppCompatActivity
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            if (s.startsWith("Unable to add the new user")) {
+        protected void onPostExecute(String s) { // error = "JSON Parsing error on Adding userNo value for error"
+
+            if (s.startsWith("Unable to authenticate login")) { // TODO - change message's
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 return;
             }
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getBoolean("success")) {
-                    Toast.makeText(getApplicationContext(), "User Added successfully"
+                    Toast.makeText(getApplicationContext(), "User logged in successfully"
                             , Toast.LENGTH_SHORT).show();
+
+                    // open MainActivity.java
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(i);
+
                 } else {
                     Toast.makeText(getApplicationContext(), "User couldn't be added: " // error even though all fields are filled in error still pops up
-                                    + jsonObject.getString("error")
                             , Toast.LENGTH_LONG).show();
-                    Log.e(ADD_USER, jsonObject.getString("error"));
                 }
             } catch (JSONException e) {
                 Toast.makeText(getApplicationContext(), "JSON Parsing error on Adding user"
                                 + e.getMessage()
                         , Toast.LENGTH_LONG).show();
-                Log.e(ADD_USER, e.getMessage());
+                Log.e(GET_USER, e.getMessage());
             }
         }
     }
