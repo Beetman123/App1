@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.mobileappgit.PostItem.GetCategoryFragment;
 import com.example.mobileappgit.PostItem.PostItemFragment;
 import com.example.mobileappgit.Profile.ProfileFragment;
 import com.example.mobileappgit.authenticate.SignInActivity;
@@ -58,12 +59,11 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.nav_home:
                             selectedFragment = new HomeFragment();
                             break;
-
                         case R.id.nav_search:
                             selectedFragment = new SearchFragment();
                             break;
                         case R.id.nav_plus:
-                            selectedFragment = new PostItemFragment();
+                            selectedFragment = new GetCategoryFragment(); //new PostItemFragment();
                             break;
                         case R.id.nav_communicate:
                             selectedFragment = new CommunicateFragment();
