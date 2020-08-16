@@ -16,7 +16,7 @@ import com.example.mobileappgit.PostItem.PostItemFragment;
 import com.example.mobileappgit.Profile.ProfileFragment;
 import com.example.mobileappgit.R;
 import com.example.mobileappgit.Search.SearchFragment;
-import com.example.mobileappgit.authenticate.Login.SignInActivity;
+import com.example.mobileappgit.authenticate.SignInActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

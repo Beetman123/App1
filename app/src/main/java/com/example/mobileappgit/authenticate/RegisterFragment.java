@@ -1,4 +1,4 @@
-package com.example.mobileappgit.authenticate.Registration;
+package com.example.mobileappgit.authenticate;
 
 import android.os.Bundle;
 
@@ -13,7 +13,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mobileappgit.R;
-import com.example.mobileappgit.authenticate.User;
+import com.example.mobileappgit.data.User.User;
+
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.

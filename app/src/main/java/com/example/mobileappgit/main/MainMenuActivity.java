@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobileappgit.R;
-import com.example.mobileappgit.authenticate.Login.SignInActivity;
+import com.example.mobileappgit.authenticate.SignInActivity;
 
 public class MainMenuActivity extends AppCompatActivity {
 

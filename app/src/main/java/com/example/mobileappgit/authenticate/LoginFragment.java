@@ -1,4 +1,4 @@
-package com.example.mobileappgit.authenticate.Login;
+package com.example.mobileappgit.authenticate;
 
 import android.os.Bundle;
 
@@ -11,11 +11,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mobileappgit.R;
-import com.example.mobileappgit.authenticate.Registration.RegisterFragment;
-import com.example.mobileappgit.authenticate.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,7 +46,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        View view = inflater.inflate(R.layout.fragment_register, container, false);
         TextView registerTextView = view.findViewById(R.id.register_text_view);
         registerTextView.setOnClickListener(new View.OnClickListener() {
             @Override

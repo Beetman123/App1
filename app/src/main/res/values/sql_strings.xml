@@ -11,4 +11,15 @@
 </string>
 
 
+    <string name="CREATE_ITEM_SQL">
+    CREATE TABLE IF NOT EXISTS Item
+    (id TEXT PRIMARY KEY, shortDesc TEXT, <!-- Warning - !!! I havent changed these fields !!!-->
+    longDesc TEXT, prereqs TEXT)
+</string>
+
+    <string name="DROP_ITEM_SQL">
+    DROP TABLE IF EXISTS Course
+</string> <!-- should it stay 'Course' or be 'Item'-->
+
+
 </resources>

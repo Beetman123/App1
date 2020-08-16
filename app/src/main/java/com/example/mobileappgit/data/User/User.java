@@ -1,4 +1,4 @@
-package com.example.mobileappgit.authenticate;
+package com.example.mobileappgit.data.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,7 +18,7 @@ public class User implements Serializable {
 
     private boolean mRemember;
 
-    public static final String FIRSTNAME    = "first"; // have to be the same as webstorme
+    public static final String FIRSTNAME    = "first"; // have to be the same as webstorm
     public static final String LASTNAME     = "last";
     public static final String EMAIL        = "email";
     public static final String USERNAME     = "username";

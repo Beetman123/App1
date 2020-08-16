@@ -1,4 +1,4 @@
-package com.example.mobileappgit.data;
+package com.example.mobileappgit.data.User;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,13 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.mobileappgit.R;
-import com.example.mobileappgit.authenticate.User;
 
 
 public class UserDB {
 
     public static final int DB_VERSION = 1;
-    public static final String DB_NAME = "Course.db";
+    public static final String DB_NAME = "Course.db"; // "Course.db"
 
     private UserDBHelper mUserDBHelper;
     private SQLiteDatabase mSQLiteDatabase;

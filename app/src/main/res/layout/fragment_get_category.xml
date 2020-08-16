@@ -5,29 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--button26-->
     <Button
-        android:id="@+id/button26"
+        android:id="@+id/toolsAndGardening"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Tools and Gardening"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/Other"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button24"
-        app:layout_constraintTop_toBottomOf="@+id/button23" />
+        app:layout_constraintStart_toEndOf="@+id/homeAndAppliances"
+        app:layout_constraintTop_toBottomOf="@+id/fashionAndAccessories" />
 
+
+    <!--button24-->
     <Button
-        android:id="@+id/button24"
+        android:id="@+id/homeAndAppliances"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:text="Button"
+        android:text="Home and Appliances"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button26"
+        app:layout_constraintEnd_toStartOf="@+id/toolsAndGardening"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button21" />
+        app:layout_constraintTop_toBottomOf="@+id/sportsAndOutdoors" />
 
     <Button
         android:id="@+id/Other"
@@ -39,152 +42,166 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button26"
-        app:layout_constraintTop_toBottomOf="@+id/button22" />
+        app:layout_constraintStart_toEndOf="@+id/toolsAndGardening"
+        app:layout_constraintTop_toBottomOf="@+id/babyAndChild" />
 
+    <!--button23-->
     <Button
-        android:id="@+id/button23"
+        android:id="@+id/fashionAndAccessories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button26"
-        app:layout_constraintEnd_toStartOf="@+id/button22"
+        android:text="Fashion and Accessories"
+        app:layout_constraintBottom_toTopOf="@+id/toolsAndGardening"
+        app:layout_constraintEnd_toStartOf="@+id/babyAndChild"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button21"
-        app:layout_constraintTop_toBottomOf="@+id/button20" />
+        app:layout_constraintStart_toEndOf="@+id/sportsAndOutdoors"
+        app:layout_constraintTop_toBottomOf="@+id/jobs" />
 
+    <!--button21-->
     <Button
-        android:id="@+id/button21"
+        android:id="@+id/sportsAndOutdoors"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button24"
-        app:layout_constraintEnd_toStartOf="@+id/button23"
+        android:text="Sports and Outdoors"
+        app:layout_constraintBottom_toTopOf="@+id/homeAndAppliances"
+        app:layout_constraintEnd_toStartOf="@+id/fashionAndAccessories"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button18" />
+        app:layout_constraintTop_toBottomOf="@+id/services" />
 
+    <!--button22-->
     <Button
-        android:id="@+id/button22"
+        android:id="@+id/babyAndChild"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:text="Button"
+        android:text="Baby and Child"
         app:layout_constraintBottom_toTopOf="@+id/Other"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button23"
-        app:layout_constraintTop_toBottomOf="@+id/button19" />
+        app:layout_constraintStart_toEndOf="@+id/fashionAndAccessories"
+        app:layout_constraintTop_toBottomOf="@+id/housingForRentSale" />
 
+    <!--button20-->
     <Button
-        android:id="@+id/button20"
+        android:id="@+id/jobs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button23"
-        app:layout_constraintEnd_toStartOf="@+id/button19"
+        android:text="Jobs"
+        app:layout_constraintBottom_toTopOf="@+id/fashionAndAccessories"
+        app:layout_constraintEnd_toStartOf="@+id/housingForRentSale"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button18"
-        app:layout_constraintTop_toBottomOf="@+id/button6" />
+        app:layout_constraintStart_toEndOf="@+id/services"
+        app:layout_constraintTop_toBottomOf="@+id/otherVehicles" />
 
+    <!--button18-->
     <Button
-        android:id="@+id/button18"
+        android:id="@+id/services"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button21"
-        app:layout_constraintEnd_toStartOf="@+id/button20"
+        android:text="Services"
+        app:layout_constraintBottom_toTopOf="@+id/sportsAndOutdoors"
+        app:layout_constraintEnd_toStartOf="@+id/jobs"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button7" />
+        app:layout_constraintTop_toBottomOf="@+id/automobiles" />
 
+    <!--button19-->
     <Button
-        android:id="@+id/button19"
+        android:id="@+id/housingForRentSale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button22"
+        android:text="Housing for rent/sale"
+        app:layout_constraintBottom_toTopOf="@+id/babyAndChild"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button20"
-        app:layout_constraintTop_toBottomOf="@+id/button8" />
+        app:layout_constraintStart_toEndOf="@+id/jobs"
+        app:layout_constraintTop_toBottomOf="@+id/vehicleParts" />
 
+    <!--button6-->
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/otherVehicles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button20"
-        app:layout_constraintEnd_toStartOf="@+id/button8"
+        android:text="Other Vehicles"
+        app:layout_constraintBottom_toTopOf="@+id/jobs"
+        app:layout_constraintEnd_toStartOf="@+id/vehicleParts"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button7"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintStart_toEndOf="@+id/automobiles"
+        app:layout_constraintTop_toBottomOf="@+id/gaming" />
 
+    <!--button8-->
     <Button
-        android:id="@+id/button8"
+        android:id="@+id/vehicleParts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button19"
+        android:text="Vehicle Parts"
+        app:layout_constraintBottom_toTopOf="@+id/housingForRentSale"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button6"
-        app:layout_constraintTop_toBottomOf="@+id/button5" />
+        app:layout_constraintStart_toEndOf="@+id/otherVehicles"
+        app:layout_constraintTop_toBottomOf="@+id/electronics" />
 
+    <!--button7-->
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/automobiles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button18"
-        app:layout_constraintEnd_toStartOf="@+id/button6"
+        android:text="Automobiles"
+        app:layout_constraintBottom_toTopOf="@+id/services"
+        app:layout_constraintEnd_toStartOf="@+id/otherVehicles"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/moviesEct" />
 
+    <!--ID=button3-->
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/moviesEct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button7"
-        app:layout_constraintEnd_toStartOf="@+id/button4"
+        android:text="Movies, Books, and Music"
+        app:layout_constraintBottom_toTopOf="@+id/automobiles"
+        app:layout_constraintEnd_toStartOf="@+id/gaming"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!--button4-->
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/gaming"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button6"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="167dp" />
+        android:text="Gaming"
+        app:layout_constraintBottom_toTopOf="@+id/otherVehicles"
+        app:layout_constraintEnd_toStartOf="@+id/electronics"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/moviesEct"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <!--button5-->
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/electronics"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button8"
+        android:text="Electronics"
+        app:layout_constraintBottom_toTopOf="@+id/vehicleParts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button4"
+        app:layout_constraintStart_toEndOf="@+id/gaming"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
