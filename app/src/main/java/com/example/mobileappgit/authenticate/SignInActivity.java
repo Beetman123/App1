@@ -70,7 +70,7 @@ public class SignInActivity extends AppCompatActivity
     private SharedPreferences mSharedPreferences;
 
 
-    /*    *//**
+    /**
      * The login fragment's listener
      *//*
     private SignInActivityListener mSignInActivityListener;
@@ -163,7 +163,7 @@ public class SignInActivity extends AppCompatActivity
 
 
     // Stuff that connects to the back when Register? is clicked
-    private class AddUserAsyncTask extends AsyncTask<String, Void, String> {
+    private class AddUserAsyncTask extends AsyncTask<String, Void, String> { // TODO - added static - may cause errors
         @Override
         protected String doInBackground(String... urls) {
             String response = "";
@@ -249,8 +249,6 @@ public class SignInActivity extends AppCompatActivity
                     //urlConnection.setDoOutput(false); // Changed to false
                     OutputStreamWriter wr =
                             new OutputStreamWriter(urlConnection.getOutputStream());
-
-                    // error happens here !!!!!!!!!!!!!!
 
                     // For Debugging
                     Log.i(GET_USER, mLoginJSON.toString()); // should I have mUserJSON

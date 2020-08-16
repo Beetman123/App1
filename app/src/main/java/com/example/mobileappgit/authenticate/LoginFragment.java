@@ -46,7 +46,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_register, container, false);
+        View view = inflater.inflate(R.layout.fragment_login, container, false); // changing from fragment_register TODO fragment_login
         TextView registerTextView = view.findViewById(R.id.register_text_view);
         registerTextView.setOnClickListener(new View.OnClickListener() {
             @Override

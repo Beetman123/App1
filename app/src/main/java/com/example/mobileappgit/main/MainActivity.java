@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.mobileappgit.CommunicateFragment;
+import com.example.mobileappgit.PostItem.PostItemActivity;
 import com.example.mobileappgit.PostItem.PostItemFragment;
 import com.example.mobileappgit.Profile.ProfileFragment;
 import com.example.mobileappgit.R;
@@ -65,7 +66,18 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new SearchFragment();
                             break;
                         case R.id.nav_plus:
-                            selectedFragment = new PostItemFragment();
+                            // TODO - run the PostItemActivity
+                            //Intent intent = new Intent(this, PostItemActivity.class);
+                            //EditText editText = (EditText) findViewById(R.id.editText);
+                            //String message = editText.getText().toString();
+                            //intent.putExtra(EXTRA_MESSAGE, message);
+                            //startActivity(intent);
+
+                            //Intent myIntent = new Intent(MainActivity.this.getActivity(), PostItemActivity.class);
+                            //Intent myIntent = new Intent(v.getContext(), PostItemActivity.class);
+                            startActivity( new Intent(MainActivity.this, PostItemActivity.class));
+
+                            // selectedFragment = new PostItemFragment();
                             break;
                         case R.id.nav_communicate:
                             selectedFragment = new CommunicateFragment();
