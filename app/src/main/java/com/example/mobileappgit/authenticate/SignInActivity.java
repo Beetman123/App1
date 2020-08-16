@@ -285,8 +285,8 @@ public class SignInActivity extends AppCompatActivity
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getBoolean("success")) {
-                    Toast.makeText(getApplicationContext(), "User logged in successfully"
-                            , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "User logged in successfully"
+                                , Toast.LENGTH_SHORT).show();
 
                     // open MainActivity.java
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);

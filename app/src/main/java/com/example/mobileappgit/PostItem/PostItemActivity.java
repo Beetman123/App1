@@ -59,12 +59,13 @@ public class PostItemActivity extends AppCompatActivity
     private JSONObject mItemJSON;
 
     // login private boolean mLoginMode;
-    private String mEmail;
-    private boolean mRemember;
+    //private String mEmail;
+    //private boolean mRemember;
 
     // login private JSONObject mLoginJSON;
     //private JSONObject mItemJSON;
 
+    // TODO - DONT NEED
     public final static String SIGN_IN_FILE_PREFS = "edu.uw.tacoma.menakaapp.sign_in_file_prefs"; // TODO - Needs to change
     public final static String EMAIL = "email";
     public final static String REMEMBER = "remember";
@@ -80,18 +81,18 @@ public class PostItemActivity extends AppCompatActivity
     /**
      * Creates the page
      */
-    // login
-    /*@Override
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signin);
+        setContentView(R.layout.activity_post_item); //...(R.layout.activity_signin); // TODO - may have to make activity_postitem instead of fragment_postitem
 
         //mSharedPreferences = getSharedPreferences(SIGN_IN_FILE_PREFS, Context.MODE_PRIVATE);
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.sign_in_fragment_container, new LoginFragment())
+                .add(R.id.post_item_fragment_container, new PostItemFragment()) //.add(R.id.sign_in_fragment_container, new PostItemFragment())
                 .commit();
-    }*/
+    }
 
 
     /**

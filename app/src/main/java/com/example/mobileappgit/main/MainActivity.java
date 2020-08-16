@@ -8,8 +8,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TextView;
+
 
 import com.example.mobileappgit.CommunicateFragment;
 import com.example.mobileappgit.PostItem.PostItemActivity;
@@ -17,6 +25,7 @@ import com.example.mobileappgit.PostItem.PostItemFragment;
 import com.example.mobileappgit.Profile.ProfileFragment;
 import com.example.mobileappgit.R;
 import com.example.mobileappgit.Search.SearchFragment;
+import com.example.mobileappgit.authenticate.LoginFragment;
 import com.example.mobileappgit.authenticate.SignInActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -29,11 +38,13 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener); // 11:30
+
+        // TODO - set starting fragment page
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main,menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -66,18 +77,66 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new SearchFragment();
                             break;
                         case R.id.nav_plus:
-                            // TODO - run the PostItemActivity
-                            //Intent intent = new Intent(this, PostItemActivity.class);
-                            //EditText editText = (EditText) findViewById(R.id.editText);
-                            //String message = editText.getText().toString();
-                            //intent.putExtra(EXTRA_MESSAGE, message);
-                            //startActivity(intent);
+                            // open PostItemActivity.java
+                            Intent i = new Intent(getApplicationContext(), PostItemActivity.class);
+                            startActivity(i);
+                            //finish(); // makes the app crash
 
-                            //Intent myIntent = new Intent(MainActivity.this.getActivity(), PostItemActivity.class);
-                            //Intent myIntent = new Intent(v.getContext(), PostItemActivity.class);
-                            startActivity( new Intent(MainActivity.this, PostItemActivity.class));
+                            /*Intent i = new Intent(this, SignInActivity.class); // Replaced oldSignInActivity.class with SignInActivity.class
+                            startActivity(i);
+                            finish();*/
 
-                            // selectedFragment = new PostItemFragment();
+
+
+                            ;/*final EditText loginEmail = view.findViewById(R.id.email_address_id);
+        final EditText loginPassword = view.findViewById(R.id.password_id);
+
+        // Added to code
+        // What happens when "Login" button is pressed
+        Button loginUserButton = view.findViewById(R.id.register_id);
+        loginUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //String Firstname = userFirstNameEditText.getText().toString();    // needs to be same order as user.java
+                //String Lastname = userLastNameEditText.getText().toString();
+                String Email = loginEmail.getText().toString(); // needs to be same order as user.java
+                //String Username = userUsernameEditText.getText().toString();
+                String Password = loginPassword.getText().toString();
+
+                //User user = new User(Firstname, Lastname, Email, Username, Password); // who's order does it need to follow?
+
+                // call login method
+
+
+                if (mAddListener != null) {
+                    mAddListener.addUser(user);
+                }
+            }
+        }*/
+/*
+
+                            final EditText emailEditText = view.findViewById(R.id.email_address_id);
+                            final EditText loginPassword = view.findViewById(R.id.password_id);
+
+                            final CheckBox rememberCheckBox = view.findViewById(R.id.login_check_box);
+                            Button loginButton = view.findViewById(R.id.login_button);
+                            loginButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    ((LoginFragment.LoginFragmentListener) getActivity()).login
+                                            (emailEditText.getText().toString(),
+                                                    loginPassword.getText().toString(),
+                                                    rememberCheckBox.isChecked());
+
+                                }
+                            });
+                            return view;
+                        }
+
+*/
+
+
                             break;
                         case R.id.nav_communicate:
                             selectedFragment = new CommunicateFragment();
