@@ -209,7 +209,7 @@ public class SignInActivity extends AppCompatActivity
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 return;
             }
-            try {
+                try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getBoolean("success")) {
                     Toast.makeText(getApplicationContext(), "User Added successfully"

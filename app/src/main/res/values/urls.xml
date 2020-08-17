@@ -3,7 +3,7 @@
     <string name="add_user">https://jaedan-services-backend.herokuapp.com/register</string>
     <string name="get_user">https://jaedan-services-backend.herokuapp.com/login</string>
     <string name="add_item">https://jaedan-services-backend.herokuapp.com/addItem</string>
-
+    <string name="get_item">https://jaedan-services-backend.herokuapp.com/getItem</string>
 
     <string name="add_course">https://jaedan-services-backend.herokuapp.com/addcourse</string>
     <string name="get_course">https://jaedan-services-backend.herokuapp.com/courses</string>

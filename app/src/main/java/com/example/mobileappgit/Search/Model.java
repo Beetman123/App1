@@ -1,6 +1,6 @@
 package com.example.mobileappgit.Search;
 
-public class Model {       // This is the Item Blueprint Class
+public class Model {       // This is the Item Blueprint Class. To be replaced by Item
 
     private  int imageIcon;
     String title;

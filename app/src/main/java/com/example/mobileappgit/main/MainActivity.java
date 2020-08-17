@@ -24,6 +24,7 @@ import com.example.mobileappgit.authenticate.SignInActivity;
 import com.example.mobileappgit.data.Item.Item;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,6 +34,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements PostItemFragment.AddListener{
@@ -111,6 +114,7 @@ public class MainActivity extends AppCompatActivity
                     return true;
                 }
             };
+
     // ---------------------------------------------------------------------------------------------
     // -------------------------- EVERYTHING BELOW IS FROM PostItemActivity.java -------------------
     // ---------------------------------------------------------------------------------------------
@@ -148,83 +152,6 @@ public class MainActivity extends AppCompatActivity
         public final static String EMAIL = "email";
         public final static String REMEMBER = "remember";
         private SharedPreferences mSharedPreferences;
-
-
-        /*    *//**
-         * The login fragment's listener
-         *//*
-    private SignInActivityListener mSignInActivityListener;
-    //private LoginFragmentListener mLoginFragmentListener;*/
-
-        /**
-         * Creates the page
-         */
-
-        // ALREADY EXISTS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // TODO - check if I need to add some of this to the other onCreate
-        /* @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_post_item); //...(R.layout.activity_signin); // TODO - may have to make activity_postitem instead of fragment_postitem
-
-            //mSharedPreferences = getSharedPreferences(SIGN_IN_FILE_PREFS, Context.MODE_PRIVATE);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.post_item_fragment_container, new PostItemFragment()) //.add(R.id.sign_in_fragment_container, new PostItemFragment())
-                    .commit();
-        }*/
-
-
-        /**
-         * Required empty public constructor
-         */
-/*    public SignInActivity() {
-        // Required empty public constructor
-    }*/
-
-        // login
-        // (is to run the Register activity after login finishes)
-    /*@Override
-    public void launchPostItemFragment() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.sign_in_fragment_container, new PostItemFragment())
-                .addToBackStack(null)
-                .commit();
-    }*/
-
-        // login
-        // Method / Function that is called when the "Sign In" button is pressed
-    /*@Override
-    public void login(String email, String pwd, boolean shouldRemember) { // email could later become either email or itemname
-        mLoginMode = true;
-        mEmail = email; // is there a reason for this? if so what about pwd
-        mRemember = shouldRemember;
-
-        StringBuilder loginUrl = new StringBuilder(getString(R.string.get_item)); // gets (url) string from urls.xml
-
-
-        // TODO - Create the json object for passing with the login url
-        // Execute Async Task with login url
-
-        mLoginJSON = new JSONObject();
-
-        try {
-            // needs to be the same order as the table
-            //mLoginJSON.put(Item.FIRSTNAME, "");   // Don't have/need this info
-            //mLoginJSON.put(Item.LASTNAME, "");    // Don't have/need this info
-            //mLoginJSON.put(Item.ITEMNAME, "");    // may have to check latter but currently don't need
-            mLoginJSON.put(Item.EMAIL, mEmail*//*email*//*);          // put in email information
-            mLoginJSON.put(Item.PASSWORD, pwd);         // check password information
-            //mLoginJSON.put(Item.loginMode, mLoginMode); // dont have somewhere to store yet
-
-            new AuthenticateAsyncTask().execute(loginUrl.toString());
-        } catch (JSONException e) {
-            Toast.makeText(this, "Error with JSON creation on adding a item: "
-                            + e.getMessage(),
-                    Toast.LENGTH_SHORT).show();
-        }
-    }*/
 
 
         @Override
@@ -321,144 +248,56 @@ public class MainActivity extends AppCompatActivity
         }
 
 
+// ---------------------------------------------------------------------------------------------
+// -------------------------- EVERYTHING BELOW IS FOR SearchFragment.java -------------------
+// ---------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------
 
-        // TODO - Need to edit !!!
-        // login
-    /*private class AuthenticateAsyncTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... urls) {
-            String response = ""; // TODO
-            HttpURLConnection urlConnection = null;
-            for (String url : urls) {
-                try {
 
-                    URL urlObject = new URL(url);
-                    urlConnection = (HttpURLConnection) urlObject.openConnection();
-                    urlConnection.setRequestMethod("POST");//urlConnection.setRequestMethod("GET"); // Switched to GET (from POST)
-                    urlConnection.setRequestProperty("Content-Type", "application/json"); // TODO - ??
-                    urlConnection.setDoOutput(true);
-                    //urlConnection.setDoOutput(false); // Changed to false
-                    OutputStreamWriter wr =
-                            new OutputStreamWriter(urlConnection.getOutputStream());
 
-                    // error happens here !!!!!!!!!!!!!!
+public static List<Item> parseItemJson (String itemJson) throws JSONException {
+    List<Item> itemList = new ArrayList<>();
+    if(itemJson != null){
+        JSONArray arr = new JSONArray(itemJson);
 
-                    // For Debugging
-                    Log.i(GET_ITEM, mLoginJSON.toString()); // should I have mItemJSON
-                    wr.write(mLoginJSON.toString());
-                    wr.flush();
-                    wr.close();
-
-                    InputStream content = urlConnection.getInputStream();
-
-                    BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-                    String s = "";
-                    while ((s = buffer.readLine()) != null) {
-                        response += s;
-                    }
-
-                } catch (Exception e) {
-                    response = "Unable to authenticate login, Reason: " // fixed this string
-                            + e.getMessage();
-                } finally {
-                    if (urlConnection != null)
-                        urlConnection.disconnect();
-                }
-            }
-            return response;
+        for (int i = 0; i < arr.length(); i++) {
+            JSONArray obj = arr.getJSONObject(i);
+            Item item = new Item(obj.getString(Item. ...) // TODO - need to finish: data > Item.js
+            );
         }
-
-        @Override
-        protected void onPostExecute(String s) { // error = "JSON Parsing error on Adding itemNo value for error"
-
-            if (s.startsWith("Unable to authenticate login")) { // TODO - change message's
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                return;
-            }
-            try {
-                JSONObject jsonObject = new JSONObject(s);
-                if (jsonObject.getBoolean("success")) {
-                    Toast.makeText(getApplicationContext(), "Item logged in successfully"
-                            , Toast.LENGTH_SHORT).show();
-
-                    // open MainActivity.java
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(i);
-
-                } else {
-                    Toast.makeText(getApplicationContext(), "Item couldn't be added: " // error even though all fields are filled in error still pops up
-                            , Toast.LENGTH_LONG).show();
-                }
-            } catch (JSONException e) {
-                Toast.makeText(getApplicationContext(), "JSON Parsing error on Adding item"
-                                + e.getMessage()
-                        , Toast.LENGTH_LONG).show();
-                Log.e(GET_ITEM, e.getMessage());
-            }
-        }
-    }*/
     }
+}
 
 
-    /**
-     * Calls the login function
-     *//*
-    public interface SignInActivityListener {
-        public void login(String email, String pwd);
-    }*/
 
 
-    /**
-     The system calls this method to draw the Fragment UI for the first time
-     */
-    /*
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
-        getActivity().setTitle("Sign In");
-        mSignInActivityListener = (SignInActivityListener) getActivity();
 
 
-        final EditText emailText = view.findViewById(R.id.email_address_id);
-        final EditText pwdText = view.findViewById(R.id.password_id);
-
-        Button loginButton = view.findViewById(R.id.login_button);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-
-            *//**
-     -   If the email address doesn't have a '@' symbol in it a toast message is sent to the
-     screen when the 'SIGN IN' button is pressed
-     -   If the password has less then 6 characters in it a toast message is sent to the
-     screen when the 'SIGN IN' button is pressed
-     *//*
-            @Override
-            public void onClick(View v){
-                String email = emailText.getText().toString();
-                String pwd = pwdText.getText().toString();
-                if(TextUtils.isEmpty(email) || !email.contains("@")) {
-                    Toast.makeText(v.getContext(),"Enter valid email address",
-                            Toast.LENGTH_SHORT)
-                            .show();
-                    emailText.requestFocus();
-                }
-                else if (TextUtils.isEmpty(pwd) || pwd.length() < 6) {
-                    Toast.makeText(v.getContext(),"Enter a valid password( atleast 6 characters)"
-                            , Toast.LENGTH_SHORT)
-                            .show();
-                    pwdText.requestFocus();
 
 
-                }
-                else{
-                    mLoginFragmentListener.login(emailText.getText().toString(), pwdText.getText().toString());
-                }}
-        });
 
-        return  view;
-    }
 
-}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

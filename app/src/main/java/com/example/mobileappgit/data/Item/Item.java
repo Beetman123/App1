@@ -22,7 +22,7 @@ public class Item implements Serializable {
     private String mTradeFor;
 
     public static final String TITLE    = "title"; // have to be the same as webstorm > "green ones"
-//    public static final String CATEGORY     = "category";
+    public static final String CATEGORY     = "category";
     public static final String DESCRIPTION  = "description";
     public static final String USERNAME     = "username";
     public static final String CONDITION     = "condition";
@@ -33,6 +33,7 @@ public class Item implements Serializable {
 
 
     // WHAT DOES THIS DO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // IT ALLOWS US TO CONVERT A JSON STRING INTO A LIST OF ITEM OBJECTS !!!!!!!!!!!!!!!!!!!!!!
     public static List<Item> parseItemJson(String itemJson) throws JSONException {
         List<Item> itemList = new ArrayList<>();
 
@@ -53,6 +54,52 @@ public class Item implements Serializable {
 
         return itemList;
     }
+
+
+    public Item(String title, String category, String description, String username,
+                String condition, String price, String trade, String tradeFor) {
+        mTitle = title;
+        mCategory = category;
+        mDescription = description;
+        mUsername = username;
+        mCategory = category;
+        mPrice = price;
+        mTrade = trade;
+        mTradeFor = tradeFor;
+    }
+
+    public String getmTitle() {
+        return mTitle;
+    }
+
+    public String getmCategory() {
+        return mCategory;
+    }
+
+    public String getmDescription() {
+        return mDescription;
+    }
+
+    public String getmUsername() {
+        return mUsername;
+    }
+
+    public String getmCondition() {
+        return mCondition;
+    }
+
+    public String getmPrice() {
+        return mPrice;
+    }
+
+    public String getmTrade() {
+        return mTrade;
+    }
+
+    public String getmTradeFor() {
+        return mTradeFor;
+    }
+
 
     /*// Checks if the email is valid, if so it saves the email
     public void setEmail(String email) {
