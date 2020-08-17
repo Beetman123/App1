@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity
         implements PostItemFragment.AddListener{
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -235,7 +236,7 @@ public class MainActivity extends AppCompatActivity
             try {
                 // Must be in this order (because its the order of the table)
                 mItemJSON.put(Item.TITLE, item.getTitle());
-                //mItemJSON.put(Item.CATEGORY, item.getCategory()); // TODO - need to uncomment when category is created
+                mItemJSON.put("category", "sports" /*Item.CATEGORY, item.getCategory()*/); // TODO - need to uncomment when category is created
                 mItemJSON.put(Item.DESCRIPTION, item.getDescription());
                 mItemJSON.put(Item.USERNAME, item.getUsername());
                 mItemJSON.put(Item.CONDITION, item.getCondition());

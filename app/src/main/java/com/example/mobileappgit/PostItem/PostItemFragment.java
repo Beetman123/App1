@@ -88,7 +88,7 @@ public class PostItemFragment extends Fragment {
                 String Itemname = Item.USERNAME;
 
                 String Trade;
-                String TradeFor;
+                String TradeFor = "";
                 if(ifItemTrade.isChecked()) // TODO - (later) could make the TradeFor disappear/appear when it is switched (would need a SwitchListener)
                 {
                     // if Checked = want to trade?
@@ -100,31 +100,12 @@ public class PostItemFragment extends Fragment {
                     Trade = "n";
                 }
 
-                //String Password = itemPasswordEditText.getText().toString();
-
-                // Does it look like a valid email
-                /*if (TextUtils.isEmpty(Email) || !Email.contains("@")) {
-                    Toast.makeText(v.getContext(), "Enter valid email address",
-                            Toast.LENGTH_SHORT)
-                            .show();
-                    itemEmailEditText.requestFocus();
-                }*/
-
-                // does it meet password requirements? // TODO - Want to make a toast if the post item is completed
-                /*else if (TextUtils.isEmpty(Password) || Password.length() < 6) {
-                    Toast.makeText(v.getContext(), "Enter a valid password( atleast 6 characters)"
-                            , Toast.LENGTH_SHORT)
-                            .show();
-                    itemPasswordEditText.requestFocus();
-                }*/
-
-                // if all other conditions are met
-                //else {
 
                 // TODO - change below line
-                    //Item item = new Item(Firstname, Lastname, Email, Username, Password); // who's order does it need to follow?
+                    Item item = new Item(Title, /*String category,*/ Description, "", // TODO - get rid of username requierment
+                            Condition, Price, Trade, TradeFor); // who's order does it need to follow?
                     if (mAddListener != null) {
-                     //   mAddListener.addItem(item);
+                        mAddListener.addItem(item);
                     }
                 //}
             }
