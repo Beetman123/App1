@@ -73,7 +73,8 @@ public class PostItemFragment extends Fragment {
 
 
         // What happens when "Add Item" button is pressed
-        Button addItemButton = v.findViewById(R.id.register_id);
+        //Button addItemButton = v.findViewById(R.id.register_id); // !!!!!!!!!!!!!!!!!!!! // TODO - THIS WAS CAUSING THE ERROR
+        Button addItemButton = v.findViewById(R.id.add_item_button);
         addItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

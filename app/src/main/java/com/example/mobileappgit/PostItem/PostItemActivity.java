@@ -146,6 +146,7 @@ public class PostItemActivity extends AppCompatActivity
         }
     }*/
 
+
     @Override
     public void addItem(Item item) {
         StringBuilder url = new StringBuilder(getString(R.string.add_item)); // url supposed to be url?
