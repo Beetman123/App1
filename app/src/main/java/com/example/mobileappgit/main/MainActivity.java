@@ -430,9 +430,6 @@ public class MainActivity extends AppCompatActivity
                         Toast.LENGTH_SHORT).show();
             }
         }
-
-
-        //these last 2 were cut off or should be above :)
     }
 
     //`1234567890
@@ -440,29 +437,6 @@ public class MainActivity extends AppCompatActivity
 
 
 }
-
-
-// ---------------------------------------------------------------------------------------------
-// -------------------------- EVERYTHING BELOW IS FOR SearchFragment.java -------------------
-// ---------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------
-
-
-
-/*public static List<Item> parseItemJson (String itemJson) throws JSONException {
-    List<Item> itemList = new ArrayList<>();
-    if(itemJson != null){
-        JSONArray arr = new JSONArray(itemJson);
-
-        for (int i = 0; i < arr.length(); i++) {
-            JSONArray obj = arr.getJSONObject(i);
-            Item item = new Item(obj.getString(Item. ...) // TODO - need to finish: data > Item.js
-            );
-        }
-    }
-}*/
-
 
 
 
