@@ -17,9 +17,9 @@ import java.util.List;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Viewholder> {
     private List<Item> itemList;
 
-    public ItemAdapter(List<Item> modelList) {
-        this.itemList = modelList;
-    }
+    public ItemAdapter(List<Item> itemList) {
+        this.itemList = itemList;
+    } // was modelList
 
     @NonNull
     @Override
@@ -33,10 +33,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Viewholder> {
     @Override
     public void onBindViewHolder(@NonNull Viewholder viewholder, int position) {
 
-        int resource = itemList.get(position).getImageIcon();            // Item Items ***
+        // Item Items ***
         String title = itemList.get(position).getTitle();
-        String body = itemList.get(position).getDescription(); //.getBody();
-        viewholder.setData(resource, title, body);
+        String descriptionText = itemList.get(position).getDescription(); //.getBody();
+        viewholder.setData(title, descriptionText);
 
     }
 
@@ -47,23 +47,20 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Viewholder> {
 
     class Viewholder extends RecyclerView.ViewHolder{ // sees object layout and properties, probably
 
-        private ImageView imageView;         // Layout Items ***
+        // Layout Items ***
         private TextView title;
-        private TextView body;
+        private TextView description;
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
 
-            imageView = itemView.findViewById(R.id.imageView);
             title = itemView.findViewById(R.id.textTitle);
-            body = itemView.findViewById(R.id.textBody);
+            description = itemView.findViewById(R.id.textDescription);
         }
 
-        private void setData(int imageResource, String titleText, String bodyText) {
-
-            imageView.setImageResource(imageResource);        // Layout Items
+        private void setData(String titleText, String descriptionText) {
             title.setText(titleText);
-            body.setText(bodyText);
+            description.setText(descriptionText);
         }
     }
 
