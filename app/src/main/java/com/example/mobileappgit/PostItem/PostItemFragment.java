@@ -16,6 +16,7 @@ import com.example.mobileappgit.data.Item.Item;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Currently is just a placeholder
@@ -80,12 +81,13 @@ public class PostItemFragment extends Fragment {
             public void onClick(View v) {
                 String Title = itemName.getText().toString();    // needs to be same order as item.java
                 String Description = itemDescription.getText().toString();
-                //String Category = itemCategory.getText().toString();
+                String Category = "category"; //itemCategory.getText().toString();
                 String Price = itemPrice.getText().toString();
                 String Condition = itemCondition.getText().toString();
 /*                Integer Date = Calendar.DATE;
                 String date = Timestamp.t*/
                 String Itemname = Item.USERNAME;
+                String Date = "1";
 
                 String Trade;
                 String TradeFor = "";
@@ -102,8 +104,8 @@ public class PostItemFragment extends Fragment {
 
 
                 // TODO - change below line
-                    Item item = new Item(Title, /*String category,*/ Description, "", // TODO - get rid of username requierment
-                            Condition, Price, Trade, TradeFor); // who's order does it need to follow?
+                    Item item = new Item(Title, Category, Description, "", // TODO - get rid of username requierment
+                            Condition, Price, Trade, TradeFor, Date); // who's order does it need to follow?
                     if (mAddListener != null) {
                         mAddListener.addItem(item);
                     }

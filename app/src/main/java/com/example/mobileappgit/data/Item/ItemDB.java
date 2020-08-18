@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ItemDB {
 
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
     public static final String DB_NAME = "Item.db";      // What is this?
 
     private ItemDBHelper mItemDBHelper;
@@ -65,12 +65,13 @@ public class ItemDB {
      * @param price
      * @param trade
      * @param tradeFor
+     * @
      * @return true or false
      */
 
 
     public boolean insertItem(String title, String category, String description, String username,
-                              String condition, String price, String trade, String tradeFor) {
+                              String condition, String price, String trade, String tradeFor, String date) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("title", title);
         contentValues.put("category", category);
@@ -80,8 +81,9 @@ public class ItemDB {
         contentValues.put("price", price);
         contentValues.put("trade", trade);
         contentValues.put("tradeFor", tradeFor);
+        contentValues.put("date", date);
 
-        long rowId = mSQLiteDatabase.insert("Item", null, contentValues);
+        long rowId = mSQLiteDatabase.insert("Items", null, contentValues);
         return rowId != -1;
     }
 
@@ -89,7 +91,7 @@ public class ItemDB {
      * Delete all the data from the Items
      */
     public void deleteItems() {
-        mSQLiteDatabase.delete("Item", null, null);
+        mSQLiteDatabase.delete("Items", null, null);
     }
 
 
@@ -102,11 +104,11 @@ public class ItemDB {
 
         String[] columns = {
                 "title", "category", "description", "username", "condition", "price",
-                "trade", "tradeFor"
+                "trade", "tradeFor", "date"
         };
 
         Cursor c = mSQLiteDatabase.query(
-                "Item",  // The table to query
+                "Items",  // The table to query
                 columns,                               // The columns to return
                 null,                                // The columns for the WHERE clause
                 null,                            // The values for the WHERE clause
@@ -135,8 +137,10 @@ public class ItemDB {
             String price = c.getString(5);
             String trade = c.getString(6);
             String tradeFor = c.getString(7);
-            Item item = new Item(title, /*category,*/ description, username, condition, price, trade, // TODO - add category
-                    tradeFor);
+            String date = c.getString(8);
+
+            Item item = new Item(title, category, description, username, condition, price, trade, // TODO - add category
+                    tradeFor, date);
             list.add(item);
             c.moveToNext();
         }

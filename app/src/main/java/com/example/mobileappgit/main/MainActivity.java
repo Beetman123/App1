@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity
         implements PostItemFragment.AddListener{
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +51,7 @@ public class MainActivity extends AppCompatActivity
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener); // 11:30
 
+        getItems();
         // TODO - set starting fragment page
     }
 
@@ -277,28 +277,9 @@ public class MainActivity extends AppCompatActivity
 */
     // COMMENTED OUT @Override because it was causing an error !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //@Override // WHAT NOW
-    public void getItems(Item item) {
+    public void getItems() {
         StringBuilder url = new StringBuilder(getString(R.string.get_item)); // url supposed to be url?
-
-        // Construct a JSONObject to build a formatted message to send.
-        mItemJSON = new JSONObject();
-        try {
-            // Must be in this order (because its the order of the table)
-            mItemJSON.put(Item.TITLE, item.getTitle());
-            mItemJSON.put("category", "sports" /*Item.CATEGORY, item.getCategory()*/); // TODO - need to uncomment when category is created
-            mItemJSON.put(Item.DESCRIPTION, item.getDescription());
-            mItemJSON.put(Item.USERNAME, item.getUsername());
-            mItemJSON.put(Item.CONDITION, item.getCondition());
-            mItemJSON.put(Item.PRICE, item.getPrice());
-            mItemJSON.put(Item.TRADE, item.getTrade());
-            mItemJSON.put(Item.TRADEFOR, item.getTradeFor());
-
-            new AddItemAsyncTask().execute(url.toString());
-        } catch (JSONException e) { // is there a reason its 'e'
-            Toast.makeText(this, "Error with JSON creation on adding a item: "
-                            + e.getMessage(),
-                    Toast.LENGTH_SHORT).show();
-        }
+            new CoursesTask().execute(url.toString());
     }
 
 
@@ -419,21 +400,26 @@ public class MainActivity extends AppCompatActivity
 
                 if (jsonObject.getBoolean("success")) {
                     mItemList = Item.parseItemJson(
-                            jsonObject.getString("courses")); // Test. was names. This change eleminates the popup errors, but still nothing shows up. Great turmoil wells up within me, my darling...   (just for your info that's somewhat from The Clone Wars... yep)
+                            jsonObject.getString("Items")); // Test. was names. This change eleminates the popup errors, but still nothing shows up. Great turmoil wells up within me, my darling...   (just for your info that's somewhat from The Clone Wars... yep)
                     if(mItemDB == null){
                         mItemDB = new ItemDB(getApplicationContext());
                     }
 
                     //Delete old data so that you can refresh the local
                     //database with the network data.
-                    mItemDB.deleteItems();
+                    //mItemDB.deleteItems();
 
                     //Also, add to the local database
                     for(int i=0; i<mItemList.size(); i++){
                         Item item = mItemList.get(i);
-                        mItemDB.insertItem(item.getTitle(), item.getCategory(), item.getDescription(), item.getUsername(),
-                                item.getCondition(), item.getPrice(), item.getTrade(), item.getTradeFor());
+                        if (!mItemDB.insertItem(item.getTitle(), item.getCategory(), item.getDescription(), item.getUsername(),
+                                item.getCondition(), item.getPrice().toString(), item.getTrade(), item.getTradeFor(), item.getDate())) {
+                            Log.i("MainActivity", "insert error");
+                        };
                     }
+
+                    ArrayList<Item> items = (ArrayList<Item>) mItemDB.getItems();
+                    Log.i("ITEMS", String.valueOf(items.size()));
                     /*if (!mItemList.isEmpty()) {
                         setupRecyclerView((RecyclerView) mRecyclerView);
                     }*/

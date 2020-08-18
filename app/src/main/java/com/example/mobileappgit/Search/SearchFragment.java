@@ -15,6 +15,7 @@ import com.example.mobileappgit.R;
 import com.example.mobileappgit.data.Item.Item;
 import com.example.mobileappgit.data.Item.ItemDB;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class SearchFragment extends Fragment {
     private RecyclerView recyclerView;
     List<Item> itemList;
     private ItemDB mItemDB;
-
+//Listener similar , getItems
 
     @Override
     public View onCreateView(/*@NonNull*/ LayoutInflater inflater, /*@Nullable*/ ViewGroup container, /*@Nullable*/ Bundle savedInstanceState) {
@@ -49,7 +50,8 @@ public class SearchFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         mItemDB = new ItemDB(getContext());
-        ItemAdapter adapter = new ItemAdapter(mItemDB.getItems()); // was initData()
+        ArrayList<Item> list = (ArrayList<Item>) mItemDB.getItems();
+        ItemAdapter adapter = new ItemAdapter(list); // was initData()
         recyclerView.setAdapter(adapter);
 
         adapter.notifyDataSetChanged();

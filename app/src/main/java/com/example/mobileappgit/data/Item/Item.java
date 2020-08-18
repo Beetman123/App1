@@ -20,6 +20,7 @@ public class Item implements Serializable {
     private String mPrice; // or string
     private String mTrade;
     private String mTradeFor;
+    private String mDate;
 
     public static final String TITLE    = "title"; // have to be the same as webstorm > "green ones"
     public static final String CATEGORY     = "category";
@@ -28,7 +29,8 @@ public class Item implements Serializable {
     public static final String CONDITION     = "condition";
     public static final String PRICE        = "price";
     public static final String TRADE        = "trade";
-    public static final String TRADEFOR     = "tradeFor";
+    public static final String TRADEFOR     = "tradefor";
+    public static final String DATE     = "inputdate";
 //    public static final String INPUTDATE    = "inputDate"; // DONT NEED DATE
 
 
@@ -43,10 +45,10 @@ public class Item implements Serializable {
 
             for(int i = 0; i < arr.length(); i++){
                 JSONObject obj = arr.getJSONObject(i);
-                Item item = new Item(obj.getString(Item.TITLE), /*obj.getString(Item.CATEGORY),*/
+                Item item = new Item(obj.getString(Item.TITLE), obj.getString(Item.CATEGORY),
                         obj.getString(Item.DESCRIPTION), obj.getString(Item.USERNAME),
                         obj.getString(Item.CONDITION), obj.getString(Item.PRICE),
-                        obj.getString(Item.TRADE), obj.getString(Item.TRADEFOR));
+                        obj.getString(Item.TRADE), obj.getString(Item.TRADEFOR), obj.getString(Item.DATE));
 
                 itemList.add(item);
             }
@@ -128,17 +130,26 @@ public class Item implements Serializable {
     }*/
 
     // sets the firstname ... to mFirstname
-    public Item(String title, /*String category,*/ String description, String username,
-                String condition, String price, String trade, String tradeFor) {
+    public Item(String title, String category, String description, String username,
+                String condition, String price, String trade, String tradeFor, String mDate) {
         mTitle          = title;
-        //mCategory     =
+        mCategory     = category;
         mDescription    = description;
         mUsername       = User.USERNAME;
         mCondition      = condition;
         mPrice           = price;
-        mTrade           = trade;
         mTradeFor        = tradeFor;
+
+        if (mTrade != "n") {
+            mTradeFor = trade;
+        }
+        else
+        {
+            mTradeFor = "NULL";
+        }
     }
+
+    public String getDate() {return mDate;}
 
     public String getTitle() {
         return mTitle;
