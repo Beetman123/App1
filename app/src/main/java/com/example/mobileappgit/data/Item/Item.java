@@ -56,7 +56,7 @@ public class Item implements Serializable {
     }
 
 
-    public Item(String title, String category, String description, String username,
+    /*public Item(String title, String category, String description, String username,
                 String condition, String price, String trade, String tradeFor) {
         mTitle = title;
         mCategory = category;
@@ -98,7 +98,7 @@ public class Item implements Serializable {
 
     public String getmTradeFor() {
         return mTradeFor;
-    }
+    }*/
 
 
     /*// Checks if the email is valid, if so it saves the email
@@ -174,7 +174,3 @@ public class Item implements Serializable {
 
     // if you need getters and setters right click > chose 'Generate ..' > ...
 }
-
-
-
-

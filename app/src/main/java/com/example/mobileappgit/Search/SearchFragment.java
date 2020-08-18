@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobileappgit.R;
+import com.example.mobileappgit.data.Item.Item;
+import com.example.mobileappgit.data.Item.ItemDB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,9 @@ public class SearchFragment extends Fragment {
     }
 
     private RecyclerView recyclerView;
-    List<Model> itemList;
+    List<Item> itemList;
+    private ItemDB mItemDB;
+
 
     @Override
     public View onCreateView(/*@NonNull*/ LayoutInflater inflater, /*@Nullable*/ ViewGroup container, /*@Nullable*/ Bundle savedInstanceState) {
@@ -44,8 +48,8 @@ public class SearchFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        
-        ItemAdapter adapter = new ItemAdapter(initData());
+        mItemDB = new ItemDB(getContext());
+        ItemAdapter adapter = new ItemAdapter(mItemDB.getItems()); // was initData()
         recyclerView.setAdapter(adapter);
 
         adapter.notifyDataSetChanged();

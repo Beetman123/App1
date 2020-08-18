@@ -10,14 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobileappgit.R;
+import com.example.mobileappgit.data.Item.Item;
 
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Viewholder> {
-    private List<Model> modelList;
+    private List<Item> itemList;
 
-    public ItemAdapter(List<Model> modelList) {
-        this.modelList = modelList;
+    public ItemAdapter(List<Item> modelList) {
+        this.itemList = modelList;
     }
 
     @NonNull
@@ -32,16 +33,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Viewholder> {
     @Override
     public void onBindViewHolder(@NonNull Viewholder viewholder, int position) {
 
-        int resource = modelList.get(position).getImageIcon();            // Model Items ***
-        String title = modelList.get(position).getTitle();
-        String body = modelList.get(position).getBody();
+        int resource = itemList.get(position).getImageIcon();            // Item Items ***
+        String title = itemList.get(position).getTitle();
+        String body = itemList.get(position).getDescription(); //.getBody();
         viewholder.setData(resource, title, body);
 
     }
 
     @Override
     public int getItemCount() {
-        return modelList.size();
+        return itemList.size();
     }
 
     class Viewholder extends RecyclerView.ViewHolder{ // sees object layout and properties, probably

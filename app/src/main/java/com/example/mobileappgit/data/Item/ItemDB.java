@@ -15,10 +15,36 @@ import java.util.List;
 public class ItemDB {
 
     public static final int DB_VERSION = 1;
-    public static final String DB_NAME = "Item.db";
+    public static final String DB_NAME = "Item.db";      // What is this?
 
     private ItemDBHelper mItemDBHelper;
     private SQLiteDatabase mSQLiteDatabase;
+
+    class ItemDBHelper extends SQLiteOpenHelper {
+
+        private final String CREATE_ITEM_SQL;
+
+        private final String DROP_ITEM_SQL;
+
+        public ItemDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+            super(context, name, factory, version);
+            CREATE_ITEM_SQL = context.getString(R.string.CREATE_ITEM_SQL); //R.string.CREATE_User_SQL // TODO - this
+            DROP_ITEM_SQL = context.getString(R.string.DROP_ITEM_SQL); //R.string.DROP_User_SQL   // TODO - and this
+            // TODO - ask what this does - is in res > values > sql_strings.xml
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase sqLiteDatabase) {
+            sqLiteDatabase.execSQL(CREATE_ITEM_SQL);
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+            sqLiteDatabase.execSQL(DROP_ITEM_SQL);
+            onCreate(sqLiteDatabase);
+        }
+    }
+
 
     public ItemDB(Context context) {
         mItemDBHelper = new ItemDBHelper(
@@ -29,12 +55,20 @@ public class ItemDB {
 
     //CLASS IS NOT COMPLETE
 
-    /**
+  /*  *//**
      * Inserts the course into the local sqlite table. Returns true if successful, false otherwise.
+     * @param title
+     * @param category
+     * @param description
      * @param username
-     * @param password
+     * @param condition
+     * @param price
+     * @param trade
+     * @param tradeFor
      * @return true or false
      */
+
+
     public boolean insertItem(String title, String category, String description, String username,
                               String condition, String price, String trade, String tradeFor) {
         ContentValues contentValues = new ContentValues();
@@ -54,9 +88,11 @@ public class ItemDB {
     /**
      * Delete all the data from the Items
      */
-    public void deleteCourses() {
+    public void deleteItems() {
         mSQLiteDatabase.delete("Item", null, null);
     }
+
+
 
     	/**
      * Returns the list of courses from the local Course table.
@@ -108,29 +144,6 @@ public class ItemDB {
         return list;
     }
 
-    class ItemDBHelper extends SQLiteOpenHelper {
 
-        private final String CREATE_COURSE_SQL;
-
-        private final String DROP_COURSE_SQL;
-
-        public ItemDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-            super(context, name, factory, version);
-            CREATE_COURSE_SQL = context.getString(R.string.CREATE_ITEM_SQL); //R.string.CREATE_User_SQL // TODO - this
-            DROP_COURSE_SQL = context.getString(R.string.DROP_ITEM_SQL); //R.string.DROP_User_SQL   // TODO - and this
-            // TODO - ask what this does - is in res > values > sql_strings.xml
-        }
-
-        @Override
-        public void onCreate(SQLiteDatabase sqLiteDatabase) {
-            sqLiteDatabase.execSQL(CREATE_COURSE_SQL);
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-            sqLiteDatabase.execSQL(DROP_COURSE_SQL);
-            onCreate(sqLiteDatabase);
-        }
-    }
 
 }
