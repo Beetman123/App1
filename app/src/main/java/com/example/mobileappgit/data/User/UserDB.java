@@ -15,7 +15,7 @@ import com.example.mobileappgit.R;
 public class UserDB {
 
     public static final int DB_VERSION = 1;
-    public static final String DB_NAME = "Course.db"; // "Course.db"
+    public static final String DB_NAME = "User.db"; // "Course.db"
 
     private UserDBHelper mUserDBHelper;
     private SQLiteDatabase mSQLiteDatabase;

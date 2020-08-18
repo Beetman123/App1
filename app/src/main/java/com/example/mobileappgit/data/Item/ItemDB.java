@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.mobileappgit.R;
 
 import java.util.ArrayList;
@@ -35,8 +37,10 @@ public class ItemDB {
      * @param password
      * @return true or false
      */
+    // TODO - change date from a String to a Integer
     public boolean insertItem(String title, String category, String description, String username,
-                              String condition, String price, String trade, String tradeFor) {
+                              String condition, String price, String trade, String tradeFor, 
+                              /*Integer*/String date) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("title", title);
         contentValues.put("category", category);
@@ -46,16 +50,17 @@ public class ItemDB {
         contentValues.put("price", price);
         contentValues.put("trade", trade);
         contentValues.put("tradeFor", tradeFor);
+        contentValues.put("date", date);
 
-        long rowId = mSQLiteDatabase.insert("Item", null, contentValues);
+        long rowId = mSQLiteDatabase.insert("Items", null, contentValues); // Table = Items
         return rowId != -1;
     }
 
     /**
      * Delete all the data from the Items
      */
-    public void deleteCourses() {
-        mSQLiteDatabase.delete("Item", null, null);
+    public void deleteItems() {
+        mSQLiteDatabase.delete("Items", null, null);
     }
 
     	/**
@@ -66,7 +71,7 @@ public class ItemDB {
 
         String[] columns = {
                 "title", "category", "description", "username", "condition", "price",
-                "trade", "tradeFor"
+                "trade", "tradeFor", "date"
         };
 
         Cursor c = mSQLiteDatabase.query(
@@ -99,8 +104,9 @@ public class ItemDB {
             String price = c.getString(5);
             String trade = c.getString(6);
             String tradeFor = c.getString(7);
-            Item item = new Item(title, /*category,*/ description, username, condition, price, trade, // TODO - add category
-                    tradeFor);
+            String date = c.getString(8);
+            Item item = new Item(title, category, description, username, condition, price, trade, // TODO - add category
+                    tradeFor, date);
             list.add(item);
             c.moveToNext();
         }

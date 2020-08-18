@@ -20,6 +20,7 @@ public class Item implements Serializable {
     private String mPrice; // or string
     private String mTrade;
     private String mTradeFor;
+    private String mDate; // TODO - change date to a integer
 
     public static final String TITLE    = "title"; // have to be the same as webstorm > "green ones"
     public static final String CATEGORY     = "category";
@@ -29,7 +30,7 @@ public class Item implements Serializable {
     public static final String PRICE        = "price";
     public static final String TRADE        = "trade";
     public static final String TRADEFOR     = "tradeFor";
-//    public static final String INPUTDATE    = "inputDate"; // DONT NEED DATE
+    public static final String DATE    = "date"; // DONT NEED DATE
 
 
     // WHAT DOES THIS DO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -43,10 +44,11 @@ public class Item implements Serializable {
 
             for(int i = 0; i < arr.length(); i++){
                 JSONObject obj = arr.getJSONObject(i);
-                Item item = new Item(obj.getString(Item.TITLE), /*obj.getString(Item.CATEGORY),*/
+                Item item = new Item(obj.getString(Item.TITLE), obj.getString(Item.CATEGORY),
                         obj.getString(Item.DESCRIPTION), obj.getString(Item.USERNAME),
                         obj.getString(Item.CONDITION), obj.getString(Item.PRICE),
-                        obj.getString(Item.TRADE), obj.getString(Item.TRADEFOR));
+                        obj.getString(Item.TRADE), obj.getString(Item.TRADEFOR),
+                        obj.getString(Item.DATE));
 
                 itemList.add(item);
             }
@@ -57,7 +59,7 @@ public class Item implements Serializable {
 
 
     public Item(String title, String category, String description, String username,
-                String condition, String price, String trade, String tradeFor) {
+                String condition, String price, String trade, String tradeFor, String date) {
         mTitle = title;
         mCategory = category;
         mDescription = description;
@@ -66,6 +68,7 @@ public class Item implements Serializable {
         mPrice = price;
         mTrade = trade;
         mTradeFor = tradeFor;
+        mDate = date;
     }
 
     public String getmTitle() {
@@ -100,7 +103,9 @@ public class Item implements Serializable {
         return mTradeFor;
     }
 
-
+    public String getmDate() {
+        return mDate;
+    }
     /*// Checks if the email is valid, if so it saves the email
     public void setEmail(String email) {
         if (email == null

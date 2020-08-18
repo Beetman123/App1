@@ -7,7 +7,7 @@
 </string>
 
     <string name="DROP_USER_SQL">
-    DROP TABLE IF EXISTS Course
+    DROP TABLE IF EXISTS User <!-- should it stay 'Course' or be 'User'-->
 </string>
 
 
@@ -18,7 +18,7 @@
 </string>
 
     <string name="DROP_ITEM_SQL">
-    DROP TABLE IF EXISTS Course
+    DROP TABLE IF EXISTS Item
 </string> <!-- should it stay 'Course' or be 'Item'-->
 
 
