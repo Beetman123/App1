@@ -57,10 +57,9 @@ public class SearchFragment extends Fragment {
         adapter.notifyDataSetChanged();
 
         return view;
-
     }
 
-    private List<Model> initData() {                 // Create Items
+/*    private List<Model> initData() {                 // Create Items Prototype for Model
 
         List<Model> modelList = new ArrayList<>();
         modelList.add(new Model(R.drawable.sokka_welcomes_you, "I am Pants", "They turn the user into batman"));
@@ -75,7 +74,6 @@ public class SearchFragment extends Fragment {
         modelList.add(new Model(R.drawable.ic_launcher_background, "I am lots of candy", "Very Yummy! YumYumYum!"));
 
         return modelList;
-    }
-
+    }*/
 
 }

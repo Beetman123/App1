@@ -1,84 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_red_light">
+    android:background="#197CA8">
 
     <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="64dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginRight="25dp"
-        android:text="Home Fragment"
-        android:textSize="30sp" />
+        android:id="@+id/textViewCondition"
+        android:layout_width="205dp"
+        android:layout_height="173dp"
+        android:layout_marginBottom="72dp"
+        android:text="Condition"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.619"
+        app:layout_constraintStart_toEndOf="@+id/textViewDescription" />
 
     <TextView
-        android:id="@+id/price"
-        android:layout_width="105dp"
-        android:layout_height="40dp"
-        android:layout_below="@+id/title"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginRight="25dp"
-        android:text="TextView" />
+        android:id="@+id/textViewTradeFor"
+        android:layout_width="107dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Trade For"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPrice" />
 
     <TextView
-        android:id="@+id/description"
-        android:layout_width="336dp"
-        android:layout_height="139dp"
-        android:layout_below="@+id/price"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginRight="23dp"
-        android:text="TextView" />
+        android:id="@+id/textViewTrade"
+        android:layout_width="98dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="4dp"
+        android:text="Trade"
+        app:layout_constraintEnd_toStartOf="@+id/textViewTradeFor"
+        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintStart_toEndOf="@+id/textViewTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPrice" />
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="175dp"
+        android:layout_height="105dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="8dp"
+        android:text="Title"
+        app:layout_constraintBottom_toTopOf="@+id/textViewCategory"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewSokka"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/profile_image_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/price"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="1dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:id="@+id/imageViewSokka"
+        android:layout_width="418dp"
+        android:layout_height="307dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/sokka_welcomes_you" />
 
     <TextView
-        android:id="@+id/ifTrade"
-        android:layout_width="87dp"
-        android:layout_height="40dp"
-        android:layout_below="@+id/title"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginRight="26dp"
-        android:layout_toStartOf="@+id/price"
-        android:layout_toLeftOf="@+id/price"
-        android:text="TextView" />
+        android:id="@+id/textViewPrice"
+        android:layout_width="211dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="8dp"
+        android:text="Price"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.636"
+        app:layout_constraintStart_toEndOf="@+id/textViewTitle"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewSokka" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/textViewCategory"
+        android:layout_width="175dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="8dp"
+        android:text="Category"
+        app:layout_constraintBottom_toTopOf="@+id/textViewDescription"
+        app:layout_constraintEnd_toStartOf="@+id/textViewUsername"
+        app:layout_constraintHorizontal_bias="0.181"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <!--
-    <?xml version="1.0" encoding="utf-8"?>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/textViewDescription"
+        android:layout_width="181dp"
+        android:layout_height="208dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginBottom="64dp"
+        android:text="Description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <TextView
+        android:id="@+id/textViewUsername"
+        android:layout_width="207dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTradeFor" />
+</androidx.constraintlayout.widget.ConstraintLayout>
