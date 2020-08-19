@@ -9,6 +9,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="400dp"
+            android:layout_height="420dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/light_blue_full_icon" />
+
+
         <EditText
             android:id="@+id/email_address_id"
             android:layout_width="match_parent"
