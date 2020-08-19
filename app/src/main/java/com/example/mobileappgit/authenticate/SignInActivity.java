@@ -87,7 +87,7 @@ public class SignInActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
 
 // temp
-        /*mSharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        mSharedPreferences = getPreferences(Context.MODE_PRIVATE);
         boolean ifLoggedIn = mSharedPreferences.getBoolean(REMEMBER, false);
         //boolean ifLoggedIn = getResources().getBoolean(0); // !!!!!!!!!!!!!!!! what!!! // TODO -need to "login" user still
         // if sharedprefereances is true
@@ -97,12 +97,19 @@ public class SignInActivity extends AppCompatActivity
             Intent i = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(i);
             finish(); // ??
-        }*/
-        //else {
+        }
+        else {
+
             //run if file preferences is false
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_signin);
-        //}
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_signin);
+
+        //mSharedPreferences = getSharedPreferences(SIGN_IN_FILE_PREFS, Context.MODE_PRIVATE);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.sign_in_fragment_container, new LoginFragment())
+                .commit();
+        }
     }
 
 
