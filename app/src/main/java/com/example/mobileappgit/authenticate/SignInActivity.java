@@ -16,6 +16,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 }*/
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -27,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.mobileappgit.R;
+import com.example.mobileappgit.Search.SearchFragment;
 import com.example.mobileappgit.data.User.User;
 import com.example.mobileappgit.main.MainActivity;
 
@@ -64,7 +66,7 @@ public class SignInActivity extends AppCompatActivity
     private JSONObject mLoginJSON;
     //private JSONObject mUserJSON;
 
-    public final static String SIGN_IN_FILE_PREFS = "edu.uw.tacoma.menakaapp.sign_in_file_prefs"; // TODO - Needs to change
+    public final static String SIGN_IN_FILE_PREFS = "com.example.mobileappgit.sign_in_file_prefs";
     public final static String EMAIL = "email";
     public final static String REMEMBER = "remember";
     private SharedPreferences mSharedPreferences;
@@ -80,15 +82,36 @@ public class SignInActivity extends AppCompatActivity
      * Creates the page
      */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) { // STARTS HERE !!!!!!!!!!!! // TODO - check shared prefs
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signin);
 
-        //mSharedPreferences = getSharedPreferences(SIGN_IN_FILE_PREFS, Context.MODE_PRIVATE);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.sign_in_fragment_container, new LoginFragment())
-                .commit();
+
+        mSharedPreferences = getSharedPreferences(SIGN_IN_FILE_PREFS, Context.MODE_PRIVATE);
+        boolean ifLoggedIn = mSharedPreferences.getBoolean(REMEMBER, false);
+
+        // if wants to be logged in automaticly
+        if (ifLoggedIn)
+        {
+            setContentView(R.layout.activity_main);
+
+            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(i);
+
+/*            getSupportFragmentManager()
+                    .beginTransaction()
+                    //.add(R.id.main_menu_fragment_container, new SearchFragment()) // COULD BE PROBLEMATIC !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    .commit();*/
+        }
+
+        // if not logged in before or doesn't want to be logged in automatically
+        else {
+            setContentView(R.layout.activity_signin);
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.sign_in_fragment_container, new LoginFragment())
+                    .commit();
+        }
     }
 
 
@@ -123,18 +146,27 @@ public class SignInActivity extends AppCompatActivity
         mLoginJSON = new JSONObject();
 
         try {
-            // needs to be the same order as the table
-            //mLoginJSON.put(User.FIRSTNAME, "");   // Don't have/need this info
-            //mLoginJSON.put(User.LASTNAME, "");    // Don't have/need this info
             //mLoginJSON.put(User.USERNAME, "");    // may have to check latter but currently don't need
             mLoginJSON.put(User.EMAIL, mEmail/*email*/);          // put in email information
             mLoginJSON.put(User.PASSWORD, pwd);         // check password information
-            //mLoginJSON.put(User.loginMode, mLoginMode); // dont have somewhere to store yet
+            //mLoginJSON.put(REMEMBER, mLoginMode); // don't need this to check if login is correct
 
             new AuthenticateAsyncTask().execute(loginUrl.toString());
         } catch (JSONException e) {
-            Toast.makeText(this, "Error with JSON creation on adding a user: "
+            Toast.makeText(this, "Error with JSON creation on logging in user: "
                             + e.getMessage(),
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        // Save SharedPreferences (if told to)
+        if(shouldRemember)
+        {
+            SharedPreferences.Editor editor = mSharedPreferences.edit();
+            editor.putBoolean(REMEMBER, shouldRemember);
+            editor.putString(EMAIL, email);
+            editor.commit();
+
+            Toast.makeText(getApplicationContext(), "Login preferences saved for " + email,
                     Toast.LENGTH_SHORT).show();
         }
     }
@@ -302,6 +334,10 @@ public class SignInActivity extends AppCompatActivity
                         , Toast.LENGTH_LONG).show();
                 Log.e(GET_USER, e.getMessage());
             }
+
+            // Save sharedPreferences
+
+
         }
     }
 }

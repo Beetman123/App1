@@ -1,5 +1,7 @@
 package com.example.mobileappgit.Search;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mobileappgit.R;
 import com.example.mobileappgit.data.Item.Item;
 import com.example.mobileappgit.data.Item.ItemDB;
+import com.example.mobileappgit.main.MainActivity;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -32,7 +35,27 @@ public class SearchFragment extends Fragment {
     private RecyclerView recyclerView;
     List<Item> itemList;
     private ItemDB mItemDB;
+    private final boolean mTwoPane = false; // TODO - check how to check this
 //Listener similar , getItems
+
+    // @Override // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public void onClick (View view) {
+        Item item = (Item) view.getTag();
+        if(mTwoPane) { // TODO = delete this (keep what is in the else though)
+            Bundle arguments = new Bundle();
+
+        }
+        else{
+            Context context = view.getContext();
+            Intent intent = new Intent (context, MainActivity.class);
+            intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item);
+
+            context.startActivity(intent);
+        }
+
+
+    }
+
 
     @Override
     public View onCreateView(/*@NonNull*/ LayoutInflater inflater, /*@Nullable*/ ViewGroup container, /*@Nullable*/ Bundle savedInstanceState) {

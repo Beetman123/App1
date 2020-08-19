@@ -12,6 +12,7 @@ import java.util.List;
 
 public class Item implements Serializable {
 
+
     private String mTitle;
     private String mCategory;
     private String mDescription;
