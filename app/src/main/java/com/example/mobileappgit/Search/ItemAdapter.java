@@ -60,7 +60,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Viewholder> {
         String tradeForText = itemList.get(position).getTradeFor();
         String priceText = itemList.get(position).getPrice().toString();
 
-        int image_id = images[1]; // there are 3 images (0-2) to chose from top images list
+        int image_id = images[2]; // there are 3 images (0-2) to chose from top images list
 
         viewholder.setData(titleText, "Description: " + descriptionText,
                 "Category: \n" + categoryText,
