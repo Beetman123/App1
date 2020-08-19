@@ -39,9 +39,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class MainActivity extends AppCompatActivity
         implements PostItemFragment.AddListener{
 
+    public final static String SIGN_IN_FILE_PREFS = "com.example.mobileappgit.sign_in_file_prefs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,11 @@ public class MainActivity extends AppCompatActivity
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener); // 11:30
+
+/*        SharedPreferences sharedPreferences =
+                getSharedPreferences(SignInActivity.SIGN_IN_FILE_PREFS, Context.MODE_PRIVATE);
+        String email = sharedPreferences.getString(SignInActivity.EMAIL, "Unknown");
+        emailTextView.setText(email);*/
 
         getItems();
         // TODO - set starting fragment page
@@ -64,11 +72,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_logout) {
-            SharedPreferences sharedPreferences =
+            /*SharedPreferences sharedPreferences =
                     getSharedPreferences(getString(R.string.LOGIN_PREFS), Context.MODE_PRIVATE);
             sharedPreferences.edit().putBoolean(getString(R.string.LOGGEDIN), false)
                     .commit();
-
+*/
             Intent i = new Intent(this, SignInActivity.class); // Replaced oldSignInActivity.class with SignInActivity.class
             startActivity(i);
             finish();
@@ -150,7 +158,7 @@ public class MainActivity extends AppCompatActivity
         //private JSONObject mItemJSON;
 
         // TODO - DONT NEED
-        public final static String SIGN_IN_FILE_PREFS = "edu.uw.tacoma.menakaapp.sign_in_file_prefs"; // TODO - Needs to change
+        //public final static String SIGN_IN_FILE_PREFS = "edu.uw.tacoma.menakaapp.sign_in_file_prefs"; // TODO - Needs to change
         public final static String EMAIL = "email";
         public final static String REMEMBER = "remember";
         private SharedPreferences mSharedPreferences;

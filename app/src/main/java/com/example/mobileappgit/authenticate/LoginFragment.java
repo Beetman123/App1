@@ -1,5 +1,7 @@
 package com.example.mobileappgit.authenticate;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -40,6 +42,11 @@ public class LoginFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mLoginFragmentListener = (LoginFragmentListener) getActivity();
+
+        /*SharedPreferences sharedPreferences =
+                getSharedPreferences(SignInActivity.SIGN_IN_FILE_PREFS, Context.MODE_PRIVATE);
+        String email = sharedPreferences.getString(SignInActivity.EMAIL, "Unknown");
+        emailTextView.setText(email);*/
     }
 
     @Override
@@ -54,7 +61,8 @@ public class LoginFragment extends Fragment {
                 ((LoginFragmentListener) getActivity()).launchRegisterFragment();
             }
 
-        });/*final EditText loginEmail = view.findViewById(R.id.email_address_id);
+        });
+        /*final EditText loginEmail = view.findViewById(R.id.email_address_id);
         final EditText loginPassword = view.findViewById(R.id.password_id);
 
         // Added to code

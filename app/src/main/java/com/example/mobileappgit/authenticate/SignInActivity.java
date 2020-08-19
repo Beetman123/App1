@@ -16,6 +16,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 }*/
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -38,7 +39,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.PasswordAuthentication;
 import java.net.URL;
+import java.security.KeyStore;
+
+import static android.provider.Telephony.Mms.Part.TEXT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,18 +61,17 @@ public class SignInActivity extends AppCompatActivity
     public static final String ADD_USER = "add_user"; // is referencing urls.xml
     public static final String GET_USER = "get_user"; // is referencing urls.xml
     private JSONObject mUserJSON;
+    private JSONObject mLoginJSON;
 
+    // is used for SharedPreferences
     private boolean mLoginMode;
     private String mEmail;
     private boolean mRemember;
-
-    private JSONObject mLoginJSON;
-    //private JSONObject mUserJSON;
-
-    public final static String SIGN_IN_FILE_PREFS = "edu.uw.tacoma.menakaapp.sign_in_file_prefs"; // TODO - Needs to change
+    private SharedPreferences mSharedPreferences;
+    public final static String SIGN_IN_FILE_PREFS = "com.example.mobileappgit.sign_in_file_prefs";
     public final static String EMAIL = "email";
     public final static String REMEMBER = "remember";
-    private SharedPreferences mSharedPreferences;
+
 
 
     /**
@@ -81,14 +85,24 @@ public class SignInActivity extends AppCompatActivity
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signin);
 
-        //mSharedPreferences = getSharedPreferences(SIGN_IN_FILE_PREFS, Context.MODE_PRIVATE);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.sign_in_fragment_container, new LoginFragment())
-                .commit();
+// temp
+        /*mSharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        boolean ifLoggedIn = mSharedPreferences.getBoolean(REMEMBER, false);
+        //boolean ifLoggedIn = getResources().getBoolean(0); // !!!!!!!!!!!!!!!! what!!! // TODO -need to "login" user still
+        // if sharedprefereances is true
+        if (ifLoggedIn)
+        {
+            // open MainActivity.java
+            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(i);
+            finish(); // ??
+        }*/
+        //else {
+            //run if file preferences is false
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_signin);
+        //}
     }
 
 
@@ -110,9 +124,9 @@ public class SignInActivity extends AppCompatActivity
     // Method / Function that is called when the "Sign In" button is pressed
     @Override
     public void login(String email, String pwd, boolean shouldRemember) { // email could later become either email or username
-        mLoginMode = true;
-        mEmail = email; // is there a reason for this? if so what about pwd
-        mRemember = shouldRemember;
+        mLoginMode = true; // but is there a reason for this!
+        mEmail = email; // is there a reason for this? if so what about pwd (for sharedPreferances) but isnt nessisary
+        mRemember = shouldRemember; // this doesn't make sense either
 
         StringBuilder loginUrl = new StringBuilder(getString(R.string.get_user)); // gets (url) string from urls.xml
 
@@ -137,6 +151,22 @@ public class SignInActivity extends AppCompatActivity
                             + e.getMessage(),
                     Toast.LENGTH_SHORT).show();
         }
+
+        // Save SharedPreferences (if told to)
+        if(shouldRemember)
+        {
+            SharedPreferences.Editor editor = mSharedPreferences.edit();
+            editor.putBoolean(REMEMBER, shouldRemember);
+            editor.putString(EMAIL, email);
+            //editor.putString(PASSWORD, pwd); // !!!!!!!!!!!!!!!!!!!!!!!!! SHOULDN'T SAVE PASSWORD TO FILE
+            //editor.putInt(getString(R.string.saved_high_score), newHighScore);
+
+            editor.commit();
+        }
+        /*else // delete the sharedPreferences if they exist (for now this is the best way)
+        {
+
+        }*/
     }
 
     @Override
@@ -236,7 +266,7 @@ public class SignInActivity extends AppCompatActivity
     private class AuthenticateAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
-            String response = ""; // TODO
+            String response = "Login Successfull"; // TODO
             HttpURLConnection urlConnection = null;
             for (String url : urls) {
                 try {
@@ -278,9 +308,24 @@ public class SignInActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String s) { // error = "JSON Parsing error on Adding userNo value for error"
 
+            // if login wasn't successful
             if (s.startsWith("Unable to authenticate login")) { // TODO - change message's
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 return;
+            }
+            // if login was successful (not previous) & mRemember == true
+            else
+            {
+                if (mRemember) {
+                    mSharedPreferences.edit()
+                            .putString(EMAIL, mEmail)
+                            .putBoolean(REMEMBER, mRemember)
+                            .commit();
+                } else {
+                    mSharedPreferences.edit()
+                            .clear()
+                            .commit();
+                }
             }
             try {
                 JSONObject jsonObject = new JSONObject(s);
@@ -293,11 +338,11 @@ public class SignInActivity extends AppCompatActivity
                     startActivity(i);
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "User couldn't be added: " // error even though all fields are filled in error still pops up
+                    Toast.makeText(getApplicationContext(), "User couldn't be logged in: " // error even though all fields are filled in error still pops up
                             , Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
-                Toast.makeText(getApplicationContext(), "JSON Parsing error on Adding user"
+                Toast.makeText(getApplicationContext(), "JSON Parsing error on Logging in user"
                                 + e.getMessage()
                         , Toast.LENGTH_LONG).show();
                 Log.e(GET_USER, e.getMessage());
