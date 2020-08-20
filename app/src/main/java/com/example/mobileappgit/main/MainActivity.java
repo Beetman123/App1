@@ -433,7 +433,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     //`1234567890
-
+    /*private void sendMail(String mEditTextTo, String mEditTextSubject, String mEditTextMessage) {
+        String recipientList = mEditTextTo.getText().toString();
+        String[] recipients = recipientList.split(",");
+        String subject = mEditTextSubject.getText().toString();
+        String message = mEditTextMessage.getText().toString();
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_EMAIL, recipients);
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, message);
+        intent.setType("message/rfc822");
+        startActivity(Intent.createChooser(intent, "Choose an email client"));
+    }*/
 
 
 }

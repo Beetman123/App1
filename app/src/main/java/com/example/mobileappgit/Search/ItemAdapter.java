@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,21 +36,42 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Viewholder> {
     ItemDetailFragment itemDetailFragment;
     private int[] images = {R.drawable.sokka_welcomes_you, R.drawable.jeep_wrangler1, R.drawable.jeep_wrangler2};
 
+    // for button listener
+    private OnButtonClickListener mListener;
+    public interface OnButtonClickListener{
+        void onButtonClick(int position);
+    }
+    public void setOnButtonClickListener(OnButtonClickListener listener) {
+        mListener = listener;
+    }
 
 
     public ItemAdapter(List<Item> itemList/*, int[] images*/) {
         this.itemList = itemList;
         //this.images = images; // delete?
-    } // was modelList
+    }
+
+    /*protected void onCreate(Bundle savedInstanceState) {            What does this do??? Is it an attempt?
+        Button buttonSend = findViewById(R.id.email_reply_id);
+        buttonSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMail();
+            }
+        });
+    }*/
 
     @NonNull
     @Override
     public Viewholder onCreateViewHolder(final ViewGroup viewGroup, int viewType) {
         final LayoutInflater inflater = null; // MAY CAUSE AN ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_item_details, viewGroup, false); // mContext was viewGroup.getContext(). rowitem was fragment_item_details
-        final Viewholder vHolder = new Viewholder(view);
+        final Viewholder vHolder = new Viewholder(view, mListener); // for button
         return vHolder;
     }
+
+
+
 
     @Override
     public void onBindViewHolder(@NonNull Viewholder viewholder, int position) {
@@ -67,6 +90,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Viewholder> {
                 "Condition: \n" + conditionText, "$" + priceText,
                 "Trade for: \n" + tradeForText, image_id);
         // TODO - if tradeFor = 'n' then make a different layout saying that they don't want to trade
+
     }
 
     @Override
@@ -83,9 +107,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Viewholder> {
         private TextView tradeFor;
         //private String date;
         private ImageView image;
+        private Button email;
 
 
-        public Viewholder(@NonNull View itemView) {
+        public Viewholder(@NonNull View itemView, final OnButtonClickListener listener) {
             super(itemView);
 
             title = itemView.findViewById(R.id.textViewTitle);
@@ -95,6 +120,22 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Viewholder> {
             tradeFor = itemView.findViewById(R.id.textViewTradeFor);
             image = itemView.findViewById(R.id.imageViewSokka);
             price = itemView.findViewById(R.id.textViewPrice);
+
+            email = itemView.findViewById(R.id.email_reply_id);
+
+
+            // for Button
+            email.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onButtonClick(position);
+                        }
+                    }
+                }
+            });
         }
 
         private void setData(String titleText, String descriptionText, String categoryText,
