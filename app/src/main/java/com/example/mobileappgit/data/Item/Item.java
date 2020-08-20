@@ -94,15 +94,15 @@ public class Item implements Serializable {
         if (trade == null) { //always y or n
             throw new NullPointerException("trade is null");
         }
-
+        // tradeFor can be null
         if (tradeFor == null && trade == "y")           // Could be a problem, as this is not inforced
         {
             throw new NullPointerException("trade yes, but tradeFor is null");
         }
-        // tradeFor can be null
-        if (date == null) {
+        // This will be null
+        /*if (date == null) {
             throw new NullPointerException("mDate is null");
-        }
+        }*/
     }
 
     public String getDate() {return mDate;}

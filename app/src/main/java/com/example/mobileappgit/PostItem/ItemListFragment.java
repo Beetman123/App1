@@ -16,15 +16,7 @@ import com.example.mobileappgit.R;
 /**
  * A simple {@link Fragment} subclass.
 
- The ItemList fragment has a listener which waits until the POST ITEM button has been pressed
-
- NOT COMPLETE Class still needs to be changed
- 
- Not true
- -   If the email address doesn't have a '@' symbol in it a toast message is sent to the
- screen when the 'SIGN IN' button is pressed
- -   If the password has less then 6 characters in it a toast message is sent to the
- screen when the 'SIGN IN' button is pressed
+The item list fragment
  */
 
 public class ItemListFragment extends Fragment {

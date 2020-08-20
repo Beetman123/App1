@@ -242,7 +242,7 @@ public class SignInActivity extends AppCompatActivity
     private class AuthenticateAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
-            String response = ""; // TODO
+            String response = "";
             HttpURLConnection urlConnection = null;
             for (String url : urls) {
                 try {
@@ -250,7 +250,7 @@ public class SignInActivity extends AppCompatActivity
                     URL urlObject = new URL(url);
                     urlConnection = (HttpURLConnection) urlObject.openConnection();
                     urlConnection.setRequestMethod("POST");
-                    urlConnection.setRequestProperty("Content-Type", "application/json"); // TODO - ??
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
                     urlConnection.setDoOutput(true);
 
                     OutputStreamWriter wr =
@@ -284,7 +284,7 @@ public class SignInActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String s) {
 
-            if (s.startsWith("Unable to authenticate login")) { // TODO - change message's
+            if (s.startsWith("Unable to authenticate login")) {
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -299,11 +299,11 @@ public class SignInActivity extends AppCompatActivity
                     startActivity(i);
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "User couldn't be added: "
+                    Toast.makeText(getApplicationContext(), "User couldn't be logged in: "
                             , Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
-                Toast.makeText(getApplicationContext(), "JSON Parsing error on Adding user"
+                Toast.makeText(getApplicationContext(), "JSON Parsing error on logging in user"
                                 + e.getMessage()
                         , Toast.LENGTH_LONG).show();
                 Log.e(GET_USER, e.getMessage());

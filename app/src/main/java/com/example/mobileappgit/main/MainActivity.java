@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = new PostItemFragment();
+                    Fragment selectedFragment = new PostItemFragment(); // This doesn't change it (but needs to be set to starting fragment?)
                     switch (item.getItemId()) {
                         case R.id.nav_home:
                             selectedFragment = new HomeFragment();
@@ -150,6 +150,71 @@ public class MainActivity extends AppCompatActivity
         private class AddItemAsyncTask extends AsyncTask<String, Void, String> {
             @Override
             protected String doInBackground(String... urls) {
+                String response = "";
+                HttpURLConnection urlConnection = null;
+                for (String url : urls) {
+                    try {
+                        URL urlObject = new URL(url);
+                        urlConnection = (HttpURLConnection) urlObject.openConnection();
+                        urlConnection.setRequestMethod("POST");
+                        urlConnection.setRequestProperty("Content-Type", "application/json");
+                        urlConnection.setDoOutput(true);
+                        OutputStreamWriter wr =
+                                new OutputStreamWriter(urlConnection.getOutputStream());
+
+                        // For Debugging
+                        Log.i(ADD_ITEM, mItemJSON.toString());
+                        wr.write(mItemJSON.toString());
+                        wr.flush();
+                        wr.close();
+
+                        InputStream content = urlConnection.getInputStream();
+
+                        BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                        String s = "";
+                        while ((s = buffer.readLine()) != null) {
+                            response += s;
+                        }
+
+                    } catch (Exception e) {
+                        response = "Unable to add the new item, Reason: "
+                                + e.getMessage();
+                    } finally {
+                        if (urlConnection != null)
+                            urlConnection.disconnect();
+                    }
+                }
+                return response;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                if (s.startsWith("Unable to add the new item")) {
+                    Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.getBoolean("success")) {
+                        Toast.makeText(getApplicationContext(), "Item Added successfully"
+                                , Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Item couldn't be added: " // error even though all fields are filled in error still pops up
+                                        + jsonObject.getString("error")
+                                , Toast.LENGTH_LONG).show();
+                        Log.e(ADD_ITEM, jsonObject.getString("error"));
+                    }
+                } catch (JSONException e) {
+                    Toast.makeText(getApplicationContext(), "JSON Parsing error on Adding item"
+                                    + e.getMessage()
+                            , Toast.LENGTH_LONG).show();
+                    Log.e(ADD_ITEM, e.getMessage());
+                }
+            }
+        }
+/*        private class AddItemAsyncTask extends AsyncTask<String, Void, String> {
+            @Override
+            protected String doInBackground(String... urls) {
                 StringBuilder response = new StringBuilder();
                 HttpURLConnection urlConnection = null;
                 for (String url : urls) {
@@ -211,7 +276,7 @@ public class MainActivity extends AppCompatActivity
                     Log.e(ADD_ITEM, e.getMessage());
                 }
             }
-        }
+        }*/
 
     public void getItems() {
         new CoursesTask().execute(getString(R.string.get_item));

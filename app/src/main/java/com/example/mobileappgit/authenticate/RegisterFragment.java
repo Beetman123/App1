@@ -46,7 +46,7 @@ public class RegisterFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_register, container
                 , false);
-        getActivity().setTitle("Add a New Course");
+        getActivity().setTitle("Create Account");
         final EditText userFirstNameEditText = v.findViewById(R.id.editTextFirstName);
         final EditText userLastNameEditText = v.findViewById(R.id.editTextLastName);
         final EditText userEmailEditText = v.findViewById(R.id.editTextEmail);

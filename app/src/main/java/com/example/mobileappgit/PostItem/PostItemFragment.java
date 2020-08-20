@@ -14,15 +14,9 @@ import com.example.mobileappgit.R;
 import com.example.mobileappgit.data.Item.Item;
 
 /**
- * Currently is just a placeholder
- * But will be used to let the item post/create new trades to the Search bar
+ * The PostItemFragment is used to let the item post/create new trades to the Search bar
  *
  *
- * Actually ItemListFragment.java may be what PostItemFragment is supposed to be
- *
- *
- * should add a 'switch'Listener and if it is set to false we set the visibility of trades to gone
- * if set to true we show them.
  */
 public class PostItemFragment extends Fragment {
     private AddListener mAddListener;
@@ -47,7 +41,7 @@ public class PostItemFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_postitem, container
                 , false);
-        getActivity().setTitle("Add a new item");
+        getActivity().setTitle("Create Item");
         final EditText itemName = v.findViewById(R.id.item_name);
         final EditText itemDescription = v.findViewById(R.id.description_id);
         final EditText itemPrice = v.findViewById(R.id.sell_amount_id);
@@ -66,7 +60,7 @@ public class PostItemFragment extends Fragment {
                 String Condition = itemCondition.getText().toString();
 /*                Integer Date = Calendar.DATE;
                 String date = Timestamp.t*/
-                String Itemname = Item.USERNAME;
+                String Username = Item.USERNAME;
                 String Date = "1";
 
                 String Trade;
@@ -82,7 +76,7 @@ public class PostItemFragment extends Fragment {
                     Trade = "n";
                 }
 
-                Item item = new Item(Title, Category, Description, "",
+                Item item = new Item(Title, Category, Description, Username, // "" (for username)
                         Condition, Price, Trade, TradeFor, Date);
                 if (mAddListener != null) {
                     mAddListener.addItem(item);
