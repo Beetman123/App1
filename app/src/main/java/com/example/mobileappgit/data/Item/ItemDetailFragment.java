@@ -13,7 +13,7 @@ import com.example.mobileappgit.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ItemDetailFragment extends Fragment {
+public class ItemDetailFragment extends Fragment {         // This does nothing as of yet
 
 
     public ItemDetailFragment() {
