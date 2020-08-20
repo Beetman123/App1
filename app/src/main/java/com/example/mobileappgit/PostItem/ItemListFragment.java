@@ -40,11 +40,12 @@ public class ItemListFragment extends Fragment {
     public ItemListFragment() {
         // Required empty public constructor
     }
+
     /**
      * Calls the ItemList function
      */
         public interface ItemListFragmentListener {
-        public void ItemList(String email, String pwd);
+        void ItemList(String email, String pwd);
     }
 
     /**
@@ -58,9 +59,7 @@ public class ItemListFragment extends Fragment {
     /**
      The system calls this method to draw the Fragment UI for the first time
 
-
      View Visibility in Android could be used to hide or show the text using the switches to activate it
-
      */
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,12 +68,10 @@ public class ItemListFragment extends Fragment {
         getActivity().setTitle("Add Item");
         mItemListFragmentListener = (ItemListFragmentListener) getActivity();
 
-        final EditText emailText = view.findViewById(R.id.email_address_id);// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        final EditText pwdText = view.findViewById(R.id.password_id);// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        final EditText emailText = view.findViewById(R.id.email_address_id);
+        final EditText pwdText = view.findViewById(R.id.password_id);
 
-        //final Switch
-
-        Button ItemListButton = view.findViewById(R.id.add_item_button);// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        Button ItemListButton = view.findViewById(R.id.add_item_button);
         ItemListButton.setOnClickListener(new View.OnClickListener() {
 
             /**
@@ -96,7 +93,7 @@ public class ItemListFragment extends Fragment {
                     emailText.requestFocus();
                 }
                 else if (TextUtils.isEmpty(pwd) || pwd.length() < 6) {
-                    Toast.makeText(v.getContext(),"Enter a valid password( atleast 6 characters)"
+                    Toast.makeText(v.getContext(),"Enter a valid password (at least 6 characters)"
                             , Toast.LENGTH_SHORT)
                             .show();
                     pwdText.requestFocus();
@@ -105,10 +102,10 @@ public class ItemListFragment extends Fragment {
                 }
                 else{
                     mItemListFragmentListener.ItemList(emailText.getText().toString(), pwdText.getText().toString());
-                }}
+                }
+            }
         });
 
         return  view;
     }
-
 }

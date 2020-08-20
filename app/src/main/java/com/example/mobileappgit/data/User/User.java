@@ -18,15 +18,13 @@ public class User implements Serializable {
 
     private boolean mRemember;
 
-    public static final String FIRSTNAME    = "first"; // have to be the same as webstorm
+    public static final String FIRSTNAME    = "first";
     public static final String LASTNAME     = "last";
     public static final String EMAIL        = "email";
     public static final String USERNAME     = "username";
     public static final String PASSWORD     = "password";
 
 
-
-    // WHAT DOES THIS DO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public static List<User> parseCourseJson(String courseJson) throws JSONException {
         List<User> userList = new ArrayList<>();
 
@@ -62,16 +60,11 @@ public class User implements Serializable {
 
     // Checks if the password is valid, if so it saves the password
     public void setPassword(String password) {
-
-        // If most functionality is done you can chose to force users to use capital letters, #'s, etc
         if (password == null
                 || password.length() < 6) {
             throw new IllegalArgumentException("Password needs 6+ characters");
         }
-        // Should there be an else ? !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //else {
-            this.mPassword = password;
-        //}
+        this.mPassword = password;
     }
 
     // sets the firstname ... to mFirstname

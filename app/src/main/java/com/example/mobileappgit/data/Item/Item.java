@@ -15,14 +15,14 @@ public class Item implements Serializable {
     private String mTitle;
     private String mCategory;
     private String mDescription;
-    private String mUsername; // dont need to get from somewhere else
+    private String mUsername;
     private String mCondition;
-    private String mPrice; // or string
+    private String mPrice;
     private String mTrade;
     private String mTradeFor;
     private String mDate;
 
-    public static final String TITLE    = "title"; // have to be the same as webstorm > "green ones"
+    public static final String TITLE    = "title";
     public static final String CATEGORY     = "category";
     public static final String DESCRIPTION  = "description";
     public static final String USERNAME     = "username";
@@ -31,14 +31,12 @@ public class Item implements Serializable {
     public static final String TRADE        = "trade";
     public static final String TRADEFOR     = "tradefor";
     public static final String DATE     = "inputdate";
-//    public static final String INPUTDATE    = "inputDate"; // DONT NEED DATE
 
 
-    // WHAT DOES THIS DO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // IT ALLOWS US TO CONVERT A JSON STRING INTO A LIST OF ITEM OBJECTS !!!!!!!!!!!!!!!!!!!!!!
+
+    // This allows us to convert a JSON string into a list of item objects
     public static List<Item> parseItemJson(String itemJson) throws JSONException {
         List<Item> itemList = new ArrayList<>();
-
 
         if(itemJson != null){
             JSONArray arr = new JSONArray(itemJson);
@@ -56,78 +54,6 @@ public class Item implements Serializable {
 
         return itemList;
     }
-
-
-    /*public Item(String title, String category, String description, String username,
-                String condition, String price, String trade, String tradeFor) {
-        mTitle = title;
-        mCategory = category;
-        mDescription = description;
-        mUsername = username;
-        mCategory = category;
-        mPrice = price;
-        mTrade = trade;
-        mTradeFor = tradeFor;
-    }
-
-    public String getmTitle() {
-        return mTitle;
-    }
-
-    public String getmCategory() {
-        return mCategory;
-    }
-
-    public String getmDescription() {
-        return mDescription;
-    }
-
-    public String getmUsername() {
-        return mUsername;
-    }
-
-    public String getmCondition() {
-        return mCondition;
-    }
-
-    public String getmPrice() {
-        return mPrice;
-    }
-
-    public String getmTrade() {
-        return mTrade;
-    }
-
-    public String getmTradeFor() {
-        return mTradeFor;
-    }*/
-
-
-    /*// Checks if the email is valid, if so it saves the email
-    public void setEmail(String email) {
-        if (email == null
-                || email.length() < 6
-                || !email.contains("@")) {
-            throw new IllegalArgumentException("Email is invalid");
-        }
-        this.mEmail = email;
-    }
-
-
-
-    // Checks if the password is valid, if so it saves the password
-    public void setPassword(String password) {
-
-        // If most functionality is done you can chose to force items to use capital letters, #'s, etc
-        if (password == null
-                || password.length() < 6) {
-            throw new IllegalArgumentException("Password needs 6+ characters");
-        }
-        // Should there be an else ? !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //else {
-            this.mPassword = password;
-        //}
-    }*/
 
     // sets the firstname ... to mFirstname
     public Item(String title, String category, String description, String username,
@@ -182,6 +108,4 @@ public class Item implements Serializable {
     public String getTradeFor() {
         return mTradeFor;
     }
-
-    // if you need getters and setters right click > chose 'Generate ..' > ...
 }

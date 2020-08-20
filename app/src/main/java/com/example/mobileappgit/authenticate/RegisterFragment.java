@@ -23,10 +23,7 @@ import java.util.Calendar;
  * create an instance of this fragment.
  */
 public class RegisterFragment extends Fragment {
-
     private AddListener mAddListener;
-    //private AddListener mSignInReturnListener; // for sign in button
-    //private Button signInReturn;
 
     public interface AddListener {
         void addUser(User user);
@@ -40,8 +37,6 @@ public class RegisterFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAddListener = (AddListener) getActivity();
-        //mSignInReturnListener = (
-        //signInReturn = (Button).findViewById(R.id.login_return_id)
     }
 
     @Override
@@ -58,18 +53,18 @@ public class RegisterFragment extends Fragment {
         final EditText userPasswordEditText = v.findViewById(R.id.editTextPassword);
 
 
-        // What happens when "Add User" button is pressed
+        // This is what happens when "Add User" button is pressed
         Button addUserButton = v.findViewById(R.id.register_id);
         addUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String Firstname = userFirstNameEditText.getText().toString();    // needs to be same order as user.java
+                String Firstname = userFirstNameEditText.getText().toString();
                 String Lastname = userLastNameEditText.getText().toString();
                 String Email = userEmailEditText.getText().toString();
                 String Username = userUsernameEditText.getText().toString();
                 String Password = userPasswordEditText.getText().toString();
 
-                // Does it look like a valid email
+                // Checks if it looks like a valid email
                 if(TextUtils.isEmpty(Email) || !Email.contains("@")) {
                     Toast.makeText(v.getContext(),"Enter valid email address",
                             Toast.LENGTH_SHORT)
@@ -77,7 +72,7 @@ public class RegisterFragment extends Fragment {
                     userEmailEditText.requestFocus();
                 }
 
-                // does it meet password requirements?
+                // Checks if it meets the password requirements?
                 else if (TextUtils.isEmpty(Password) || Password.length() < 6) {
                     Toast.makeText(v.getContext(), "Enter a valid password( atleast 6 characters)"
                             , Toast.LENGTH_SHORT)
@@ -87,41 +82,14 @@ public class RegisterFragment extends Fragment {
 
                 // if all other conditions are met
                 else {
-                    User user = new User(Firstname, Lastname, Email, Username, Password); // who's order does it need to follow?
+                    User user = new User(Firstname, Lastname, Email, Username, Password);
                     if (mAddListener != null) {
                         mAddListener.addUser(user);
                     }
                 }
             }
-        }
+        });
 
-
-
-
-
-
-        /*// What happens when "Return to Login" button is pressed
-        Button returnToLoginButton = v.findViewById(R.id.login_return_id);
-
-            //Button returnToLoginButton = v.findViewById(R.id.login_return_id);
-        addUserButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String Firstname = userFirstNameEditText.getText().toString();    // needs to be same order as user.java
-                    String Lastname = userLastNameEditText.getText().toString();
-                    String Email = userEmailEditText.getText().toString();
-                    String Username = userUsernameEditText.getText().toString();
-                    String Password = userPasswordEditText.getText().toString();
-                    User user = new User(Firstname, Lastname, Email, Username, Password); // who's order does it need to follow?
-                    if (mAddListener != null) {
-                        mAddListener.addUser(user);
-                    }
-                }
-            }*/
-
-
-        );
         return v;
     }
-
 }

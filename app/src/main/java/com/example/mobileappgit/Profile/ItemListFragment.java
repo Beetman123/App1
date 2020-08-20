@@ -34,7 +34,7 @@ public class ItemListFragment extends Fragment {
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static ItemListFragment newInstance(int columnCount) {
+    public static ItemListFragment newInstance(int columnCount) { // TODO - test if nessisary
         ItemListFragment fragment = new ItemListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);

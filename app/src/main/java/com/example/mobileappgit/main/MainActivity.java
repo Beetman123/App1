@@ -3,7 +3,6 @@ package com.example.mobileappgit.main;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,7 +25,6 @@ import com.example.mobileappgit.data.Item.Item;
 import com.example.mobileappgit.data.Item.ItemDB;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,7 +39,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements PostItemFragment.AddListener{
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +66,7 @@ public class MainActivity extends AppCompatActivity
             sharedPreferences.edit().putBoolean(getString(R.string.LOGGEDIN), false)
                     .commit();
 
-            Intent i = new Intent(this, SignInActivity.class); // Replaced oldSignInActivity.class with SignInActivity.class
+            Intent i = new Intent(this, SignInActivity.class);
             startActivity(i);
             finish();
         }
@@ -83,31 +80,23 @@ public class MainActivity extends AppCompatActivity
                     Fragment selectedFragment = null;
                     switch (item.getItemId()) {
                         case R.id.nav_home:
-                            selectedFragment = new HomeFragment();
-/*                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                    selectedFragment).commit();*/
+                            selectedFragment = new HomeFragment(); // TODO - get rid of !!!
                             break;
 
                         case R.id.nav_search:
                             selectedFragment = new SearchFragment();
-/*                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                    selectedFragment).commit();*/
                             break;
+
                         case R.id.nav_plus:
                             selectedFragment = new PostItemFragment();
-/*                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                    selectedFragment).commit();*/
                             break;
 
                         case R.id.nav_communicate:
-                            selectedFragment = new CommunicateFragment();
-/*                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                    selectedFragment).commit();*/
+                            selectedFragment = new SearchFragment(); // TODO - get rid of???
                             break;
+
                         case R.id.nav_profile:
-                            selectedFragment = new ProfileFragment();
-/*                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                    selectedFragment).commit();*/
+                            selectedFragment = new ProfileFragment(); // TODO - IMPROVE or get rid of ?!
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -116,12 +105,6 @@ public class MainActivity extends AppCompatActivity
                     return true;
                 }
             };
-
-    // ---------------------------------------------------------------------------------------------
-    // -------------------------- EVERYTHING BELOW IS FROM PostItemActivity.java -------------------
-    // ---------------------------------------------------------------------------------------------
-    // ---------------------------------------------------------------------------------------------
-    // ---------------------------------------------------------------------------------------------
 
 
     /**
@@ -134,38 +117,19 @@ public class MainActivity extends AppCompatActivity
      screen when the 'SIGN IN' button is pressed
      */
 
-/*    public class PostItemActivity extends AppCompatActivity
-            implements *//*LoginFragment.LoginFragmentListener,*//*
-            PostItemFragment.AddListener {*/
-
-        public static final String ADD_ITEM = "add_item"; // is referencing urls.xml // TODO - need to change ???
-        public static final String GET_ITEM = "get_item"; // is referencing urls.xml
+        public static final String ADD_ITEM = "add_item"; // is referencing urls.xml
         private JSONObject mItemJSON;
-
-        // login private boolean mLoginMode;
-        //private String mEmail;
-        //private boolean mRemember;
-
-        // login private JSONObject mLoginJSON;
-        //private JSONObject mItemJSON;
-
-        // TODO - DONT NEED
-        public final static String SIGN_IN_FILE_PREFS = "edu.uw.tacoma.menakaapp.sign_in_file_prefs"; // TODO - Needs to change
-        public final static String EMAIL = "email";
-        public final static String REMEMBER = "remember";
-        private SharedPreferences mSharedPreferences;
-
 
         @Override
         public void addItem(Item item) {
-            StringBuilder url = new StringBuilder(getString(R.string.add_item)); // url supposed to be url?
+            StringBuilder url = new StringBuilder(getString(R.string.add_item));
 
             // Construct a JSONObject to build a formatted message to send.
             mItemJSON = new JSONObject();
             try {
                 // Must be in this order (because its the order of the table)
                 mItemJSON.put(Item.TITLE, item.getTitle());
-                mItemJSON.put("category", "sports" /*Item.CATEGORY, item.getCategory()*/); // TODO - need to uncomment when category is created
+                mItemJSON.put("category", "sports"); // TODO - uncomment/fix
                 mItemJSON.put(Item.DESCRIPTION, item.getDescription());
                 mItemJSON.put(Item.USERNAME, item.getUsername());
                 mItemJSON.put(Item.CONDITION, item.getCondition());
@@ -174,7 +138,7 @@ public class MainActivity extends AppCompatActivity
                 mItemJSON.put(Item.TRADEFOR, item.getTradeFor());
 
                 new AddItemAsyncTask().execute(url.toString());
-            } catch (JSONException e) { // is there a reason its 'e'
+            } catch (JSONException e) {
                 Toast.makeText(this, "Error with JSON creation on adding a item: "
                                 + e.getMessage(),
                         Toast.LENGTH_SHORT).show();
@@ -182,7 +146,7 @@ public class MainActivity extends AppCompatActivity
         }
 
 
-        // Stuff that connects to the back when Register? is clicked
+        // Stuff that connects to the back when Register is clicked
         private class AddItemAsyncTask extends AsyncTask<String, Void, String> {
             @Override
             protected String doInBackground(String... urls) {
@@ -213,7 +177,7 @@ public class MainActivity extends AppCompatActivity
                         }
 
                     } catch (Exception e) {
-                        response = "Unable to add the new item, Reason: "
+                        response = "Unable to add the new user, Reason: "
                                 + e.getMessage();
                     } finally {
                         if (urlConnection != null)
@@ -225,23 +189,23 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             protected void onPostExecute(String s) {
-                if (s.startsWith("Unable to add the new item")) {
+                if (s.startsWith("Unable to add the new user")) {
                     Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.getBoolean("success")) {
-                        Toast.makeText(getApplicationContext(), "Item Added successfully"
+                        Toast.makeText(getApplicationContext(), "User Added successfully"
                                 , Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Item couldn't be added: " // error even though all fields are filled in error still pops up
+                        Toast.makeText(getApplicationContext(), "User couldn't be added: "
                                         + jsonObject.getString("error")
                                 , Toast.LENGTH_LONG).show();
                         Log.e(ADD_ITEM, jsonObject.getString("error"));
                     }
                 } catch (JSONException e) {
-                    Toast.makeText(getApplicationContext(), "JSON Parsing error on Adding item"
+                    Toast.makeText(getApplicationContext(), "JSON Parsing error on adding user"
                                     + e.getMessage()
                             , Toast.LENGTH_LONG).show();
                     Log.e(ADD_ITEM, e.getMessage());
@@ -249,41 +213,11 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-
-    // ---------------------------------------------------------------------------------------------
-    // -------------------------- EVERYTHING BELOW IS FOR SearchFragment.java ----------------------
-    // ---------------------------------------------------------------------------------------------
-    // ---------------------------------------------------------------------------------------------
-    // ---------------------------------------------------------------------------------------------
-
-
-    /*public static final String ADD_ITEM = "add_item"; // is referencing urls.xml // TODO - need to change ???
-    public static final String GET_ITEM = "get_item"; // is referencing urls.xml
-    private JSONObject mItemJSON;*/
-
-    // login private boolean mLoginMode;
-    //private String mEmail;
-    //private boolean mRemember;
-
-    // login private JSONObject mLoginJSON;
-    //private JSONObject mItemJSON;
-
-    // TODO - DONT NEED
-/*
-    public final static String SIGN_IN_FILE_PREFS = "edu.uw.tacoma.menakaapp.sign_in_file_prefs"; // TODO - Needs to change
-    public final static String EMAIL = "email";
-    public final static String REMEMBER = "remember";
-    private SharedPreferences mSharedPreferences;
-*/
-    // COMMENTED OUT @Override because it was causing an error !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //@Override // WHAT NOW
     public void getItems() {
-        StringBuilder url = new StringBuilder(getString(R.string.get_item)); // url supposed to be url?
+        StringBuilder url = new StringBuilder(getString(R.string.get_item));
             new CoursesTask().execute(url.toString());
     }
 
-
-    // Stuff that connects to the back when Register? is clicked
     private class GetItemAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
@@ -336,7 +270,7 @@ public class MainActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "Item Added successfully"
                             , Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Item couldn't be added: " // error even though all fields are filled in error still pops up
+                    Toast.makeText(getApplicationContext(), "Item couldn't be added: "
                                     + jsonObject.getString("error")
                             , Toast.LENGTH_LONG).show();
                     Log.e(ADD_ITEM, jsonObject.getString("error"));
@@ -350,14 +284,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
-    //`1234567890
-
     private ItemDB mItemDB;
 
     private List<Item> mItemList;
 
-    private class CoursesTask extends AsyncTask<String, Void, String> {
+    private class CoursesTask extends AsyncTask<String, Void, String> { // TODO - hover over CoursesTask (should be renamed) what bout the error
         @Override
         protected String doInBackground(String... urls) {
             String response = "";
@@ -385,7 +316,6 @@ public class MainActivity extends AppCompatActivity
                 }
             }
             return response;
-
         }
 
         @Override
@@ -400,16 +330,12 @@ public class MainActivity extends AppCompatActivity
 
                 if (jsonObject.getBoolean("success")) {
                     mItemList = Item.parseItemJson(
-                            jsonObject.getString("Items")); // Test. was names. This change eleminates the popup errors, but still nothing shows up. Great turmoil wells up within me, my darling...   (just for your info that's somewhat from The Clone Wars... yep)
+                            jsonObject.getString("Items"));
                     if(mItemDB == null){
                         mItemDB = new ItemDB(getApplicationContext());
                     }
 
-                    //Delete old data so that you can refresh the local
-                    //database with the network data.
-                    //mItemDB.deleteItems();
-
-                    //Also, add to the local database
+                    //Add to the local database
                     for(int i=0; i<mItemList.size(); i++){
                         Item item = mItemList.get(i);
                         if (!mItemDB.insertItem(item.getTitle(), item.getCategory(), item.getDescription(), item.getUsername(),
@@ -420,9 +346,6 @@ public class MainActivity extends AppCompatActivity
 
                     ArrayList<Item> items = (ArrayList<Item>) mItemDB.getItems();
                     Log.i("ITEMS", String.valueOf(items.size()));
-                    /*if (!mItemList.isEmpty()) {
-                        setupRecyclerView((RecyclerView) mRecyclerView);
-                    }*/
                 }
 
             } catch (JSONException e) {
@@ -431,11 +354,6 @@ public class MainActivity extends AppCompatActivity
             }
         }
     }
-
-    //`1234567890
-
-
-
 }
 
 

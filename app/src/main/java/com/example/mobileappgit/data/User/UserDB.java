@@ -15,7 +15,7 @@ import com.example.mobileappgit.R;
 public class UserDB {
 
     public static final int DB_VERSION = 1;
-    public static final String DB_NAME = "Course.db"; // "Course.db"
+    public static final String DB_NAME = "Course.db";
 
     private UserDBHelper mUserDBHelper;
     private SQLiteDatabase mSQLiteDatabase;
@@ -26,8 +26,6 @@ public class UserDB {
         mSQLiteDatabase = mUserDBHelper.getWritableDatabase();
 
     }
-
-    //CLASS IS NOT COMPLETE
 
     /**
      * Inserts the course into the local sqlite table. Returns true if successful, false otherwise.

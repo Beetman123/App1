@@ -15,7 +15,7 @@ import java.util.List;
 public class ItemDB {
 
     public static final int DB_VERSION = 2;
-    public static final String DB_NAME = "Item.db";      // What is this?
+    public static final String DB_NAME = "Item.db";
 
     private ItemDBHelper mItemDBHelper;
     private SQLiteDatabase mSQLiteDatabase;
@@ -28,9 +28,8 @@ public class ItemDB {
 
         public ItemDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
             super(context, name, factory, version);
-            CREATE_ITEM_SQL = context.getString(R.string.CREATE_ITEM_SQL); //R.string.CREATE_User_SQL // TODO - this
-            DROP_ITEM_SQL = context.getString(R.string.DROP_ITEM_SQL); //R.string.DROP_User_SQL   // TODO - and this
-            // TODO - ask what this does - is in res > values > sql_strings.xml
+            CREATE_ITEM_SQL = context.getString(R.string.CREATE_ITEM_SQL);
+            DROP_ITEM_SQL = context.getString(R.string.DROP_ITEM_SQL);
         }
 
         @Override
@@ -52,22 +51,6 @@ public class ItemDB {
         mSQLiteDatabase = mItemDBHelper.getWritableDatabase();
 
     }
-
-    //CLASS IS NOT COMPLETE
-
-  /*  *//**
-     * Inserts the course into the local sqlite table. Returns true if successful, false otherwise.
-     * @param title
-     * @param category
-     * @param description
-     * @param username
-     * @param condition
-     * @param price
-     * @param trade
-     * @param tradeFor
-     * @
-     * @return true or false
-     */
 
 
     public boolean insertItem(String title, String category, String description, String username,
@@ -110,25 +93,15 @@ public class ItemDB {
         Cursor c = mSQLiteDatabase.query(
                 "Items",  // The table to query
                 columns,                               // The columns to return
-                null,                                // The columns for the WHERE clause
-                null,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                null                                 // The sort order
+                null,                         // The columns for the WHERE clause
+                null,                      // The values for the WHERE clause
+                null,                          // don't group the rows
+                null,                           // don't filter by row groups
+                null                           // The sort order
         );
         c.moveToFirst();
         List<Item> list = new ArrayList<Item>();
         for (int i=0; i<c.getCount(); i++) {
-/*            String firstname = c.getString(0);
-            String lastname = c.getString(1);
-            String username = c.getString(2);
-            String email = c.getString(3);
-            String password = c.getString(3);
-            Item Item = new Item(firstname, lastname, username, email, password);
-            list.add(Item);
-            c.moveToNext();*/
-
-
             String title = c.getString(0);
             String category = c.getString(1);
             String description = c.getString(2);
@@ -139,7 +112,7 @@ public class ItemDB {
             String tradeFor = c.getString(7);
             String date = c.getString(8);
 
-            Item item = new Item(title, category, description, username, condition, price, trade, // TODO - add category
+            Item item = new Item(title, category, description, username, condition, price, trade,
                     tradeFor, date);
             list.add(item);
             c.moveToNext();
@@ -147,7 +120,4 @@ public class ItemDB {
 
         return list;
     }
-
-
-
 }

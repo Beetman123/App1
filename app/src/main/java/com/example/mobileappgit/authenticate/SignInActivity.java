@@ -63,7 +63,6 @@ public class SignInActivity extends AppCompatActivity
     private boolean mRemember;
 
     private JSONObject mLoginJSON;
-    //private JSONObject mUserJSON;
 
     public final static String SIGN_IN_FILE_PREFS = "com.example.mobileappget.sign_in_file_prefs";
     public final static String EMAIL = "email";
@@ -73,9 +72,7 @@ public class SignInActivity extends AppCompatActivity
 
     /**
      * The login fragment's listener
-     *//*
-    private SignInActivityListener mSignInActivityListener;
-    //private LoginFragmentListener mLoginFragmentListener;*/
+     */
 
     /**
      * Creates the page
@@ -87,18 +84,13 @@ public class SignInActivity extends AppCompatActivity
         mSharedPreferences = getSharedPreferences(SIGN_IN_FILE_PREFS, Context.MODE_PRIVATE);
         boolean ifLoggedIn = mSharedPreferences.getBoolean(REMEMBER, false);
 
-        // if wants to be logged in automaticly
+        // if wants to be logged in automatically
         if (ifLoggedIn)
         {
             setContentView(R.layout.activity_main);
 
             Intent i = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(i);
-
-/*            getSupportFragmentManager()
-                    .beginTransaction()
-                    //.add(R.id.main_menu_fragment_container, new SearchFragment()) // COULD BE PROBLEMATIC !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    .commit();*/
         }
 
         // if not logged in before or doesn't want to be logged in automatically
@@ -112,13 +104,6 @@ public class SignInActivity extends AppCompatActivity
         }
     }
 
-
-    /**
-     * Required empty public constructor
-     */
-/*    public SignInActivity() {
-        // Required empty public constructor
-    }*/
     @Override
     public void launchRegisterFragment() {
         getSupportFragmentManager()
@@ -130,27 +115,19 @@ public class SignInActivity extends AppCompatActivity
 
     // Method / Function that is called when the "Sign In" button is pressed
     @Override
-    public void login(String email, String pwd, boolean shouldRemember) { // email could later become either email or username
+    public void login(String email, String pwd, boolean shouldRemember) {
         mLoginMode = true;
-        mEmail = email; // is there a reason for this? if so what about pwd
+        mEmail = email;
         mRemember = shouldRemember;
 
-        StringBuilder loginUrl = new StringBuilder(getString(R.string.get_user)); // gets (url) string from urls.xml
-
-
-        // TODO - Create the json object for passing with the login url
-        // Execute Async Task with login url
+        // gets (url) string from urls.xml
+        StringBuilder loginUrl = new StringBuilder(getString(R.string.get_user));
 
         mLoginJSON = new JSONObject();
 
         try {
-            // needs to be the same order as the table
-            //mLoginJSON.put(User.FIRSTNAME, "");   // Don't have/need this info
-            //mLoginJSON.put(User.LASTNAME, "");    // Don't have/need this info
-            //mLoginJSON.put(User.USERNAME, "");    // may have to check latter but currently don't need
-            mLoginJSON.put(User.EMAIL, mEmail/*email*/);          // put in email information
-            mLoginJSON.put(User.PASSWORD, pwd);         // check password information
-            //mLoginJSON.put(User.loginMode, mLoginMode); // dont have somewhere to store yet
+            mLoginJSON.put(User.EMAIL, mEmail/*email*/);    // put in email information
+            mLoginJSON.put(User.PASSWORD, pwd);             // check password information
 
             new AuthenticateAsyncTask().execute(loginUrl.toString());
         } catch (JSONException e) {
@@ -174,7 +151,7 @@ public class SignInActivity extends AppCompatActivity
 
     @Override
     public void addUser(User user) {
-        StringBuilder url = new StringBuilder(getString(R.string.add_user)); // url supposed to be url?
+        StringBuilder url = new StringBuilder(getString(R.string.add_user));
 
         // Construct a JSONObject to build a formatted message to send.
         mUserJSON = new JSONObject();
@@ -187,7 +164,7 @@ public class SignInActivity extends AppCompatActivity
             mUserJSON.put(User.PASSWORD, user.getmPassword());
 
             new AddUserAsyncTask().execute(url.toString());
-        } catch (JSONException e) { // is there a reason its 'e'
+        } catch (JSONException e) {
             Toast.makeText(this, "Error with JSON creation on adding a course: "
                             + e.getMessage(),
                     Toast.LENGTH_SHORT).show();
@@ -196,7 +173,7 @@ public class SignInActivity extends AppCompatActivity
 
 
     // Stuff that connects to the back when Register? is clicked
-    private class AddUserAsyncTask extends AsyncTask<String, Void, String> { // TODO - added static - may cause errors
+    private class AddUserAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
             String response = "";
@@ -248,7 +225,7 @@ public class SignInActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "User Added successfully"
                             , Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "User couldn't be added: " // error even though all fields are filled in error still pops up
+                    Toast.makeText(getApplicationContext(), "User couldn't be added: "
                                     + jsonObject.getString("error")
                             , Toast.LENGTH_LONG).show();
                     Log.e(ADD_USER, jsonObject.getString("error"));
@@ -262,10 +239,6 @@ public class SignInActivity extends AppCompatActivity
         }
     }
 
-
-
-    // TODO - Need to edit !!!
-
     private class AuthenticateAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
@@ -276,15 +249,15 @@ public class SignInActivity extends AppCompatActivity
 
                     URL urlObject = new URL(url);
                     urlConnection = (HttpURLConnection) urlObject.openConnection();
-                    urlConnection.setRequestMethod("POST");//urlConnection.setRequestMethod("GET"); // Switched to GET (from POST)
+                    urlConnection.setRequestMethod("POST");
                     urlConnection.setRequestProperty("Content-Type", "application/json"); // TODO - ??
                     urlConnection.setDoOutput(true);
-                    //urlConnection.setDoOutput(false); // Changed to false
+
                     OutputStreamWriter wr =
                             new OutputStreamWriter(urlConnection.getOutputStream());
 
                     // For Debugging
-                    Log.i(GET_USER, mLoginJSON.toString()); // should I have mUserJSON
+                    Log.i(GET_USER, mLoginJSON.toString());
                     wr.write(mLoginJSON.toString());
                     wr.flush();
                     wr.close();
@@ -298,7 +271,7 @@ public class SignInActivity extends AppCompatActivity
                     }
 
                 } catch (Exception e) {
-                    response = "Unable to authenticate login, Reason: " // fixed this string
+                    response = "Unable to authenticate login, Reason: "
                             + e.getMessage();
                 } finally {
                     if (urlConnection != null)
@@ -309,7 +282,7 @@ public class SignInActivity extends AppCompatActivity
         }
 
         @Override
-        protected void onPostExecute(String s) { // error = "JSON Parsing error on Adding userNo value for error"
+        protected void onPostExecute(String s) {
 
             if (s.startsWith("Unable to authenticate login")) { // TODO - change message's
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
@@ -326,7 +299,7 @@ public class SignInActivity extends AppCompatActivity
                     startActivity(i);
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "User couldn't be added: " // error even though all fields are filled in error still pops up
+                    Toast.makeText(getApplicationContext(), "User couldn't be added: "
                             , Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -338,64 +311,3 @@ public class SignInActivity extends AppCompatActivity
         }
     }
 }
-
-
-    /**
-     * Calls the login function
-     *//*
-    public interface SignInActivityListener {
-        public void login(String email, String pwd);
-    }*/
-
-
-    /**
-     The system calls this method to draw the Fragment UI for the first time
-     */
-    /*
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
-        getActivity().setTitle("Sign In");
-        mSignInActivityListener = (SignInActivityListener) getActivity();
-
-
-        final EditText emailText = view.findViewById(R.id.email_address_id);
-        final EditText pwdText = view.findViewById(R.id.password_id);
-
-        Button loginButton = view.findViewById(R.id.login_button);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-
-            *//**
-             -   If the email address doesn't have a '@' symbol in it a toast message is sent to the
-             screen when the 'SIGN IN' button is pressed
-             -   If the password has less then 6 characters in it a toast message is sent to the
-             screen when the 'SIGN IN' button is pressed
-             *//*
-            @Override
-            public void onClick(View v){
-                String email = emailText.getText().toString();
-                String pwd = pwdText.getText().toString();
-                if(TextUtils.isEmpty(email) || !email.contains("@")) {
-                    Toast.makeText(v.getContext(),"Enter valid email address",
-                            Toast.LENGTH_SHORT)
-                            .show();
-                    emailText.requestFocus();
-                }
-                else if (TextUtils.isEmpty(pwd) || pwd.length() < 6) {
-                    Toast.makeText(v.getContext(),"Enter a valid password( atleast 6 characters)"
-                            , Toast.LENGTH_SHORT)
-                            .show();
-                    pwdText.requestFocus();
-
-
-                }
-                else{
-                    mLoginFragmentListener.login(emailText.getText().toString(), pwdText.getText().toString());
-                }}
-        });
-
-        return  view;
-    }
-
-}*/
