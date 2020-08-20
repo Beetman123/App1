@@ -3,6 +3,7 @@ package com.example.mobileappgit.Search;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,7 +19,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Viewholder> {
     private List<Item> itemList;
     private int[] images = {R.drawable.sokka_welcomes_you, R.drawable.jeep_wrangler1, R.drawable.jeep_wrangler2};
 
-
+    // for button listener
+    private OnButtonClickListener mListener;
+    public interface OnButtonClickListener{
+        void onButtonClick(int position);
+    }
+    public void setOnButtonClickListener(OnButtonClickListener listener) {
+        mListener = listener;
+    }
 
     public ItemAdapter(List<Item> itemList) {
         this.itemList = itemList;
@@ -27,8 +35,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Viewholder> {
     @NonNull
     @Override
     public Viewholder onCreateViewHolder(final ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_item_details, viewGroup, false);
-        return new Viewholder(view);
+        final LayoutInflater inflater = null;
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate
+                (R.layout.fragment_item_details, viewGroup, false);
+        return new Viewholder(view, mListener);
     }
 
     @Override
@@ -62,9 +72,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Viewholder> {
         private TextView price;
         private TextView tradeFor;
         private ImageView image;
+        private Button email;
 
 
-        public Viewholder(@NonNull View itemView) {
+        public Viewholder(@NonNull View itemView, final OnButtonClickListener listener) {
             super(itemView);
             title = itemView.findViewById(R.id.textViewTitle);
             description = itemView.findViewById(R.id.textViewDescription);
@@ -73,6 +84,22 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Viewholder> {
             tradeFor = itemView.findViewById(R.id.textViewTradeFor);
             image = itemView.findViewById(R.id.imageViewSokka);
             price = itemView.findViewById(R.id.textViewPrice);
+
+            email = itemView.findViewById(R.id.email_reply_id);
+
+
+            // for Button
+            email.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onButtonClick(position);
+                        }
+                    }
+                }
+            });
         }
 
         private void setData(String titleText, String descriptionText, String categoryText,

@@ -23,6 +23,8 @@ import java.util.ArrayList;
  * But will be used to search through the available trades / offers that other users have posted
  */
 public class SearchFragment extends Fragment {
+    private String mEditTextSubject;
+    private String mEditTextMessage;
 
     public SearchFragment() {
     }
@@ -51,12 +53,36 @@ public class SearchFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         mItemDB = new ItemDB(getContext());
-        ArrayList<Item> list = (ArrayList<Item>) mItemDB.getItems();
+        final ArrayList<Item> list = (ArrayList<Item>) mItemDB.getItems();
         ItemAdapter adapter = new ItemAdapter(list);
+        adapter.setOnButtonClickListener(new ItemAdapter.OnButtonClickListener() {
+            @Override
+            public void onButtonClick(int position) {
+                mEditTextSubject = "Look at what I found on BarterUp!";
+                mEditTextMessage = "It is a " + list.get(position).getTitle() +
+                        ". \n The price that " + list.get(position).getUsername() +
+                        " is asking for is $" + list.get(position).getPrice();
+                sendMail(mEditTextSubject, mEditTextMessage);
+            }
+        });
+
         recyclerView.setAdapter(adapter);
 
         adapter.notifyDataSetChanged();
 
         return view;
+    }
+
+    // for email button
+    public void sendMail(String mEditTextSubject, String mEditTextMessage) {
+
+        String subject = mEditTextSubject;//.getText().toString();
+        String message = mEditTextMessage;//.getText().toString();
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_EMAIL, "");
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, message);
+        intent.setType("message/rfc822");
+        startActivity(Intent.createChooser(intent, "Choose an email client"));
     }
 }

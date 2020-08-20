@@ -15,12 +15,13 @@ import android.widget.Toast;
 import com.example.mobileappgit.R;
 import com.example.mobileappgit.data.User.User;
 
-import java.util.Calendar;
-
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link RegisterFragment} factory method to
- * create an instance of this fragment.
+ * Use the {@link RegisterFragment} factory method to create an instance of this fragment.
+ *
+ * The RegisterFragment page is where a new user is created by imputing their information
+ *
+ *
  */
 public class RegisterFragment extends Fragment {
     private AddListener mAddListener;

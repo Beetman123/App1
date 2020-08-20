@@ -11,6 +11,10 @@ import com.example.mobileappgit.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A helper for the Item class, by helping the Item class be able to have all the functionality of
+ * saving the information to the backend
+ */
 
 public class ItemDB {
 

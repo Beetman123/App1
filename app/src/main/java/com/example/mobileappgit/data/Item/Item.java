@@ -10,6 +10,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Item class is a class that represents an Item that is created by the user to be sold / traded
+ * it holds all the variables of the item and all its functions
+ */
+
 public class Item implements Serializable {
 
     private String mTitle;
@@ -57,21 +62,46 @@ public class Item implements Serializable {
 
     // sets the firstname ... to mFirstname
     public Item(String title, String category, String description, String username,
-                String condition, String price, String trade, String tradeFor, String mDate) {
+                String condition, String price, String trade, String tradeFor, String date) {
         mTitle          = title;
         mCategory     = category;
         mDescription    = description;
-        mUsername       = User.USERNAME;
+        mUsername       = username; //User.USERNAME
         mCondition      = condition;
         mPrice           = price;
+        mTrade           = trade;
         mTradeFor        = tradeFor;
+        mDate            = date;
 
-        if (mTrade != "n") {
-            mTradeFor = trade;
+        if (title == null) {
+            throw new NullPointerException("title is null");
         }
-        else
+        if (category == null) {
+            throw new NullPointerException("category is null");
+        }
+        if (description == null) {
+            throw new NullPointerException("description is null");
+        }
+        if (username == null) {
+            throw new NullPointerException("username is null");
+        }
+        if (condition == null) {
+            throw new NullPointerException("condition is null");
+        }
+        if (price == null) {
+            throw new NullPointerException("price is null");
+        }
+        if (trade == null) { //always y or n
+            throw new NullPointerException("trade is null");
+        }
+
+        if (tradeFor == null && trade == "y")           // Could be a problem, as this is not inforced
         {
-            mTradeFor = "NULL";
+            throw new NullPointerException("trade yes, but tradeFor is null");
+        }
+        // tradeFor can be null
+        if (date == null) {
+            throw new NullPointerException("mDate is null");
         }
     }
 

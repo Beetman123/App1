@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity
         bottomNav.setOnNavigationItemSelectedListener(navListener); // 11:30
 
         getItems();
-        // TODO - set starting fragment page
     }
 
     @Override
@@ -64,7 +63,8 @@ public class MainActivity extends AppCompatActivity
             SharedPreferences sharedPreferences =
                     getSharedPreferences(getString(R.string.LOGIN_PREFS), Context.MODE_PRIVATE);
             sharedPreferences.edit().putBoolean(getString(R.string.LOGGEDIN), false)
-                    .commit();
+                    //.commit();
+                    .apply();
 
             Intent i = new Intent(this, SignInActivity.class);
             startActivity(i);
@@ -77,10 +77,10 @@ public class MainActivity extends AppCompatActivity
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
+                    Fragment selectedFragment = new PostItemFragment();
                     switch (item.getItemId()) {
                         case R.id.nav_home:
-                            selectedFragment = new HomeFragment(); // TODO - get rid of !!!
+                            selectedFragment = new HomeFragment();
                             break;
 
                         case R.id.nav_search:
@@ -92,11 +92,11 @@ public class MainActivity extends AppCompatActivity
                             break;
 
                         case R.id.nav_communicate:
-                            selectedFragment = new SearchFragment(); // TODO - get rid of???
+                            selectedFragment = new CommunicateFragment();
                             break;
 
                         case R.id.nav_profile:
-                            selectedFragment = new ProfileFragment(); // TODO - IMPROVE or get rid of ?!
+                            selectedFragment = new ProfileFragment();
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity
             try {
                 // Must be in this order (because its the order of the table)
                 mItemJSON.put(Item.TITLE, item.getTitle());
-                mItemJSON.put("category", "sports"); // TODO - uncomment/fix
+                mItemJSON.put("category", "sports");
                 mItemJSON.put(Item.DESCRIPTION, item.getDescription());
                 mItemJSON.put(Item.USERNAME, item.getUsername());
                 mItemJSON.put(Item.CONDITION, item.getCondition());
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity
         private class AddItemAsyncTask extends AsyncTask<String, Void, String> {
             @Override
             protected String doInBackground(String... urls) {
-                String response = "";
+                StringBuilder response = new StringBuilder();
                 HttpURLConnection urlConnection = null;
                 for (String url : urls) {
                     try {
@@ -171,20 +171,20 @@ public class MainActivity extends AppCompatActivity
                         InputStream content = urlConnection.getInputStream();
 
                         BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-                        String s = "";
+                        String s;
                         while ((s = buffer.readLine()) != null) {
-                            response += s;
+                            response.append(s);
                         }
 
                     } catch (Exception e) {
-                        response = "Unable to add the new user, Reason: "
-                                + e.getMessage();
+                        response = new StringBuilder("Unable to add the new user, Reason: "
+                                + e.getMessage());
                     } finally {
                         if (urlConnection != null)
                             urlConnection.disconnect();
                     }
                 }
-                return response;
+                return response.toString();
             }
 
             @Override
@@ -214,14 +214,13 @@ public class MainActivity extends AppCompatActivity
         }
 
     public void getItems() {
-        StringBuilder url = new StringBuilder(getString(R.string.get_item));
-            new CoursesTask().execute(url.toString());
+        new CoursesTask().execute(getString(R.string.get_item));
     }
 
     private class GetItemAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
-            String response = "";
+            StringBuilder response = new StringBuilder();
             HttpURLConnection urlConnection = null;
             for (String url : urls) {
                 try {
@@ -242,20 +241,20 @@ public class MainActivity extends AppCompatActivity
                     InputStream content = urlConnection.getInputStream();
 
                     BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-                    String s = "";
+                    String s;
                     while ((s = buffer.readLine()) != null) {
-                        response += s;
+                        response.append(s);
                     }
 
                 } catch (Exception e) {
-                    response = "Unable to add the new item, Reason: "
-                            + e.getMessage();
+                    response = new StringBuilder("Unable to add the new item, Reason: "
+                            + e.getMessage());
                 } finally {
                     if (urlConnection != null)
                         urlConnection.disconnect();
                 }
             }
-            return response;
+            return response.toString();
         }
 
         @Override
@@ -288,10 +287,10 @@ public class MainActivity extends AppCompatActivity
 
     private List<Item> mItemList;
 
-    private class CoursesTask extends AsyncTask<String, Void, String> { // TODO - hover over CoursesTask (should be renamed) what bout the error
+    private class CoursesTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
-            String response = "";
+            StringBuilder response = new StringBuilder();
             HttpURLConnection urlConnection = null;
             for (String url : urls) {
                 try {
@@ -301,21 +300,21 @@ public class MainActivity extends AppCompatActivity
                     InputStream content = urlConnection.getInputStream();
 
                     BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-                    String s = "";
+                    String s;
                     while ((s = buffer.readLine()) != null) {
-                        response += s;
+                        response.append(s);
                     }
 
                 } catch (Exception e) {
-                    response = "Unable to download the list of items, Reason: "
-                            + e.getMessage();
+                    response = new StringBuilder("Unable to download the list of items, Reason: "
+                            + e.getMessage());
                 }
                 finally {
                     if (urlConnection != null)
                         urlConnection.disconnect();
                 }
             }
-            return response;
+            return response.toString();
         }
 
         @Override
@@ -339,9 +338,9 @@ public class MainActivity extends AppCompatActivity
                     for(int i=0; i<mItemList.size(); i++){
                         Item item = mItemList.get(i);
                         if (!mItemDB.insertItem(item.getTitle(), item.getCategory(), item.getDescription(), item.getUsername(),
-                                item.getCondition(), item.getPrice().toString(), item.getTrade(), item.getTradeFor(), item.getDate())) {
+                                item.getCondition(), item.getPrice(), item.getTrade(), item.getTradeFor(), item.getDate())) {
                             Log.i("MainActivity", "insert error");
-                        };
+                        }
                     }
 
                     ArrayList<Item> items = (ArrayList<Item>) mItemDB.getItems();

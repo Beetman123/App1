@@ -16,6 +16,10 @@ import com.example.mobileappgit.R;
 
 /**
  * A simple {@link Fragment} subclass.
+ *
+ * is the page that comes up first when the app is opened
+ * the login fragment is where the user puts in their email and password and the login fragment
+ * verifies if the login is correct
  */
 public class LoginFragment extends Fragment {
     private LoginFragmentListener mLoginFragmentListener;
