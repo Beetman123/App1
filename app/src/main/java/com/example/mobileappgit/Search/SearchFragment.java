@@ -35,8 +35,6 @@ public class SearchFragment extends Fragment {
 
         Context context = view.getContext();
         Intent intent = new Intent (context, MainActivity.class);
-        intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item);
-
         context.startActivity(intent);
     }
 

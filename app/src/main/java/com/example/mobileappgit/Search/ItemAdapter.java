@@ -28,8 +28,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Viewholder> {
     @Override
     public Viewholder onCreateViewHolder(final ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_item_details, viewGroup, false);
-        final Viewholder vHolder = new Viewholder(view);
-        return vHolder;
+        return new Viewholder(view);
     }
 
     @Override
@@ -39,7 +38,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Viewholder> {
         String categoryText = itemList.get(position).getCategory();
         String conditionText = itemList.get(position).getCondition();
         String tradeForText = itemList.get(position).getTradeFor();
-        String priceText = itemList.get(position).getPrice().toString();
+        String priceText = itemList.get(position).getPrice();
 
         int image_id = images[2]; // there are 3 images (0-2) to chose from top images list
 
@@ -86,5 +85,4 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Viewholder> {
             image.setImageResource(imageResource);
             price.setText(priceText);
         }
-    }
-}
+    }}
