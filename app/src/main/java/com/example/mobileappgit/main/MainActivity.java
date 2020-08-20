@@ -80,7 +80,8 @@ public class MainActivity extends AppCompatActivity
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
+                    //Fragment selectedFragment = null;
+                    Fragment selectedFragment = new PostItemFragment();
                     switch (item.getItemId()) {
                         case R.id.nav_home:
                             selectedFragment = new HomeFragment();
